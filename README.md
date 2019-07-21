@@ -1,7 +1,7 @@
 # TvNinja's Java Library
 Here is a little library for a wide variety of things.
 
-List of subjects:
+Subjects that this library covers:
 - files
 - arrays
 - array lists

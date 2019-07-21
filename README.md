@@ -1,4 +1,4 @@
-# TvNinja-s-Library
+# TvNinja's Java Library
 Here is a little library for a wide variety of things.
 
 List of subjects:

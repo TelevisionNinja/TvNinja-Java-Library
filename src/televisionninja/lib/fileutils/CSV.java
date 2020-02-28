@@ -188,7 +188,7 @@ public class CSV {
 	}
 
 	/**
-	 * prints aan entry to the end of the csv
+	 * prints an entry to the end of the csv
 	 * 
 	 * @param string
 	 * @author TelevisionNinja

@@ -7,8 +7,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import televisionninja.lib.stringutils.FileName;
-
 /**
  * This version allows any file that doesn't have the .csv extenstion to be used with this class
  * 

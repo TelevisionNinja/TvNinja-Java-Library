@@ -175,7 +175,7 @@ public class CSV2 {
 	 * creates CSV file
 	 * @author TelevisionNinja
 	 */
-	public CSV(final File csv) {
+	public CSV2(final File csv) {
 		this.csv = csv;
 		refreshTemp();
 	}

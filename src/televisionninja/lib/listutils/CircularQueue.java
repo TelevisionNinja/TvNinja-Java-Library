@@ -3,6 +3,12 @@ package televisionninja.lib.listutils;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * uses an arraylist
+ * 
+ * @author TelevisionNinja
+ * 
+ */
 public class CircularQueue<E> {
 	private int size = 0,
 			rear = 0;
@@ -26,7 +32,6 @@ public class CircularQueue<E> {
 	
 	public E getFront() {
 		return queue.get(0);
-		
 	}
 	
 	public E getRear() {

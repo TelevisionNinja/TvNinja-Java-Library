@@ -40,7 +40,7 @@ public class CSV {
 	public static List<String> parseLine(final String cvsLine, char separator, char customQuote) {
 		final List<String> result = new ArrayList<>();
 
-		//if empty, return!
+		//if empty, return
 		if (cvsLine == null) {
 			return result;
 		}
@@ -68,7 +68,6 @@ public class CSV {
 					doubleQuotesInColumn = false;
 				}
 				else {
-					//Fixed : allow "" in custom quote enclosed
 					if (ch == '\"') {
 						if (!doubleQuotesInColumn) {
 							curVal.append(ch);
@@ -83,11 +82,10 @@ public class CSV {
 			else {
 				if (ch == customQuote) {
 					inQuotes = true;
-					//Fixed : allow "" in empty quote enclosed
 					if (chars[0] != '"' && customQuote == '\"') {
 						curVal.append('"');
 					}
-					//double quotes in column will hit this!
+					//double quotes in column will hit this
 					if (startCollectChar) {
 						curVal.append('"');
 					}
@@ -102,7 +100,7 @@ public class CSV {
 					continue;
 				}
 				else if (ch == '\n') {
-					//the end, break!
+					//the end, break
 					break;
 				}
 				else {
@@ -151,7 +149,7 @@ public class CSV {
 			for (int i = 0; i < val.length(); i++) {
 				final char ch = val.charAt(i);
 				if (ch == customQuote) {
-					line.append(customQuote);  //extra quote
+					line.append(customQuote); //extra quote
 				}
 				line.append(ch);
 			}

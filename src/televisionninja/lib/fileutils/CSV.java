@@ -1,6 +1,3 @@
-/**
- * 
- */
 package televisionninja.lib.fileutils;
 
 import java.io.BufferedReader;
@@ -13,6 +10,8 @@ import java.util.List;
 import televisionninja.lib.stringutils.FileName;
 
 /**
+ * only files with the extension .csv can be used with this class
+ * 
  * @author TelevisionNinja
  *
  */

@@ -1,6 +1,8 @@
 # TvNinja's Java Library
 Here is a little library for a wide variety of things. Multiple different solutions for the same problem are also included.
 
+Compatible Java version: 11
+
 Subjects that this library covers:
 - files
 - arrays & array lists

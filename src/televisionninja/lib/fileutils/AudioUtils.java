@@ -1,6 +1,3 @@
-/**
- * 
- */
 package televisionninja.lib.fileutils;
 
 import java.io.File;

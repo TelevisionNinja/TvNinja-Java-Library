@@ -1,5 +1,5 @@
 # TvNinja's Java Library
-Here is a little library for a wide variety of things. Multiple different solutions for the same problem are provided.
+Here is a little library for a wide variety of things. Multiple different solutions for the same problem are also included.
 
 Subjects that this library covers:
 - files
@@ -53,7 +53,7 @@ Strings:
 
 Buttons:
 - switch
-- button
+- push button
 - confirmation button
 
 Trees:

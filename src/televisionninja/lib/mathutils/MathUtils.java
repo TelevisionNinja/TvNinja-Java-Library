@@ -537,6 +537,25 @@ public class MathUtils extends NumberUtils {
 	}
 
 	/**
+	 * onilne method
+	 * 
+	 * @param value
+	 * @param decimalPlaces
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static double roundToDecimalPlace(double value, int decimalPlaces) {
+	    int pow = 10;
+	    for (int i = 1; i < decimalPlaces; i++) {
+	        pow *= 10;
+	    }
+	    double tmp = value * pow,
+	    		tmpSub = tmp - (int) tmp;
+
+	    return ((double) ((int) (value >= 0 ? (tmpSub >= 0.5f ? tmp + 1 : tmp) : (tmpSub >= -0.5f ? tmp : tmp - 1)))) / pow;
+	}
+
+	/**
 	 * 
 	 * @param fraction
 	 * 		-input string
@@ -554,7 +573,7 @@ public class MathUtils extends NumberUtils {
 		}
 		return (numerator / gcf) + "/" + (denominator / gcf);
 	}
-
+	
 	/**
 	 * 
 	 * @param y1
@@ -566,24 +585,5 @@ public class MathUtils extends NumberUtils {
 	 */
 	public static double slope(final double y1, final double y2, final double x1, final double x2) {
 		return (y2 - y1) / (x2 - x1);
-	}
-	
-	/**
-	 * onilne method
-	 * 
-	 * @param value
-	 * @param decimalPlaces
-	 * @return
-	 * @author TelevisionNinja
-	 */
-	public static double roundToDecimalPlace(double value, int decimalPlaces) {
-	    int pow = 10;
-	    for (int i = 1; i < decimalPlaces; i++) {
-	        pow *= 10;
-	    }
-	    double tmp = value * pow,
-	    		tmpSub = tmp - (int) tmp;
-
-	    return ((double) ((int) (value >= 0 ? (tmpSub >= 0.5f ? tmp + 1 : tmp) : (tmpSub >= -0.5f ? tmp : tmp - 1)))) / pow;
 	}
 }

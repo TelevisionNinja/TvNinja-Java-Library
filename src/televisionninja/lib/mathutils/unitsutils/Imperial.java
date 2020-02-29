@@ -17,19 +17,6 @@ public class Imperial {
 	}
 	
 	/**
-	 * returns awg name of a given radius in inches
-	 * if negative returned, then add 1 to the absolute value of the number to get the number of zeros
-	 * unless if the returned number is near 0 then the name is 0
-	 * 
-	 * @param i
-	 * @return awg
-	 * @author TelevisionNinja
-	 */
-	public static double inToAwg(final double i) {
-		return 36d - 39d * (Math.log(200d * i) / Math.log(92d));
-	}
-
-	/**
 	 * 
 	 * @param f
 	 * @return
@@ -57,6 +44,19 @@ public class Imperial {
 	 */
 	public static double inchToFoot(final double i) {
 		return i / 12d;
+	}
+
+	/**
+	 * returns awg name of a given radius in inches
+	 * if negative returned, then add 1 to the absolute value of the number to get the number of zeros
+	 * unless if the returned number is near 0 then the name is 0
+	 * 
+	 * @param i
+	 * @return awg
+	 * @author TelevisionNinja
+	 */
+	public static double inToAwg(final double i) {
+		return 36d - 39d * (Math.log(200d * i) / Math.log(92d));
 	}
 
 	/**

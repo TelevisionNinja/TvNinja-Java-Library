@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This version allows any file that doesn't have the .csv extenstion to be used with this class
+ * This version allows any file that doesn't have the .csv extension to be used with this class
  * 
  * @author TelevisionNinja
- *
+ * 
  */
 public class CSV2 {
 	/**

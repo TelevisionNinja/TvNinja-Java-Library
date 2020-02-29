@@ -63,6 +63,24 @@ public class ArrayUtils {
 
 	/**
 	 * 
+	 * @param <E>
+	 * @param list
+	 * @param index
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String circularPrintArray(int[] list, int index) {
+		StringBuilder str = new StringBuilder();
+		str.append("[");
+		for (int i = index; i < list.length + index - 1; i++) {
+			str.append(list[i % list.length] + ", ");
+		}
+		str.append(list[(list.length + index - 1) % list.length] + "]");
+		return str.toString();
+	}
+
+	/**
+	 * 
 	 * @param arr
 	 * @param n
 	 * @return
@@ -384,7 +402,7 @@ public class ArrayUtils {
 	public static double sum_2(final double[] arr) {
 		return Arrays.stream(arr).sum();
 	}
-
+	
 	/**
 	 * 
 	 * @param arr
@@ -393,23 +411,5 @@ public class ArrayUtils {
 	 */
 	public static double sumOfRange(final double[] arr, final int beginIndex, final int endIndex) {
 		return Arrays.stream(arr, beginIndex, endIndex).sum();
-	}
-	
-	/**
-	 * 
-	 * @param <E>
-	 * @param list
-	 * @param index
-	 * @return
-	 * @author TelevisionNinja
-	 */
-	public static String circularPrintArray(int[] list, int index) {
-		StringBuilder str = new StringBuilder();
-		str.append("[");
-		for (int i = index; i < list.length + index - 1; i++) {
-			str.append(list[i % list.length] + ", ");
-		}
-		str.append(list[(list.length + index - 1) % list.length] + "]");
-		return str.toString();
 	}
 }

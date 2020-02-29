@@ -18,16 +18,16 @@ public class CircularQueue<E> {
 		this.size = size;
 	}
 	
+	public void deQueue() {
+		queue.remove(0);
+		rear--;
+	}
+	
 	public void enQueue(E obj) {
 		if (rear + 1 <= size) {
 			rear++;
 			queue.add(obj);
 		}
-	}
-	
-	public void deQueue() {
-		queue.remove(0);
-		rear--;
 	}
 	
 	public E getFront() {

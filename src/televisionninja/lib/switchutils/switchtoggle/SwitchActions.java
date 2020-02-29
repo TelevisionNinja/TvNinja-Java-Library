@@ -8,6 +8,6 @@ package televisionninja.lib.switchutils.switchtoggle;
  *
  */
 public interface SwitchActions {
-	public void onAction();
 	public void offAction();
+	public void onAction();
 }

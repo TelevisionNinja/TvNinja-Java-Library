@@ -14,8 +14,8 @@ public class PhysicsUtils {
 	 * @param velocity
 	 * @return
 	 */
-	public static double momentum(double mass, double velocity) {
-		return mass * velocity;
+	public static double kineticEnergy(double mass, double velocity) {
+		return mass / 2 * velocity * velocity;
 	}
 	
 	/**
@@ -24,7 +24,7 @@ public class PhysicsUtils {
 	 * @param velocity
 	 * @return
 	 */
-	public static double kineticEnergy(double mass, double velocity) {
-		return mass / 2 * velocity * velocity;
+	public static double momentum(double mass, double velocity) {
+		return mass * velocity;
 	}
 }

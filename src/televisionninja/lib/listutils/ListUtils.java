@@ -163,6 +163,25 @@ public class ListUtils {
 
 	/**
 	 * 
+	 * @param <E>
+	 * @param list
+	 * @param index
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static <E> String circularPrintList(List<E> list, int index) {
+		StringBuilder str = new StringBuilder();
+		int size = list.size();
+		str.append("[");
+		for (int i = index; i < size + index - 1; i++) {
+			str.append(list.get(i % size) + ", ");
+		}
+		str.append(list.get((size + index - 1) % size) + "]");
+		return str.toString();
+	}
+
+	/**
+	 * 
 	 * @param list
 	 * 		list to be formatted
 	 * @param character
@@ -444,7 +463,7 @@ public class ListUtils {
 	public static List<String> stringToList_3(final String str, final String separator) {
 		return new ArrayList<>(List.of(str.split(separator)));
 	}
-
+	
 	/**
 	 * 
 	 * @param str
@@ -454,24 +473,5 @@ public class ListUtils {
 	 */
 	public static List<String> stringToList_4(final String str, final String separator) {
 		return arrObjectToList_3(str.split(separator));
-	}
-	
-	/**
-	 * 
-	 * @param <E>
-	 * @param list
-	 * @param index
-	 * @return
-	 * @author TelevisionNinja
-	 */
-	public static <E> String circularPrintList(List<E> list, int index) {
-		StringBuilder str = new StringBuilder();
-		int size = list.size();
-		str.append("[");
-		for (int i = index; i < size + index - 1; i++) {
-			str.append(list.get(i % size) + ", ");
-		}
-		str.append(list.get((size + index - 1) % size) + "]");
-		return str.toString();
 	}
 }

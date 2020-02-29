@@ -12,8 +12,20 @@ public class Metric {
 	 * @return diameter
 	 * @author TelevisionNinja
 	 */
-	public static double awgTomm(final double awg) {
+	public static double awgToMm(final double awg) {
 		return Math.pow(92d, (36d - awg) / 39d) / 1000d * 127d;
+	}
+
+	/**
+	 * if awg is one of the zero names, then put -(# of zeros - 1)
+	 * 
+	 * @param awg
+	 * @return diameter
+	 * @author TelevisionNinja
+	 */
+	public static double awgToMmSq(final double awg) {
+		final double r = Math.pow(92d, (36d - awg) / 39d) / 2000d * 127d;
+		return Math.PI * r * r;
 	}
 
 	/**
@@ -44,6 +56,24 @@ public class Metric {
 	 */
 	public static double centiToBase(final double c) {
 		return c / 100d;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static double mmSqToAwg(final double mmSq) {
+		return 36d - 39d * (Math.log(Math.sqrt(mmSq / Math.PI) / 127d * 2000d) / Math.log(92d));
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static double mmToAwg(final double mm) {
+		return 36d - 39d * (Math.log(mm / 127d * 1000d) / Math.log(92d));
 	}
 
 	/**

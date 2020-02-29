@@ -15,7 +15,7 @@ public class Imperial {
 	public static double awgToin(final double awg) {
 		return Math.pow(92d, (36d - awg) / 39d) / 200d;
 	}
-	
+
 	/**
 	 * 
 	 * @param f

@@ -69,8 +69,8 @@ public class ArrayUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static String circularPrintArray(int[] list, int index) {
-		StringBuilder str = new StringBuilder();
+	public static String circularPrintArray(final int[] list, final int index) {
+		final StringBuilder str = new StringBuilder();
 		str.append("[");
 		for (int i = index; i < list.length + index - 1; i++) {
 			str.append(list[i % list.length] + ", ");
@@ -402,7 +402,7 @@ public class ArrayUtils {
 	public static double sum_2(final double[] arr) {
 		return Arrays.stream(arr).sum();
 	}
-	
+
 	/**
 	 * 
 	 * @param arr

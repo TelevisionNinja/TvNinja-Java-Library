@@ -50,7 +50,7 @@ public class MathUtils extends NumberUtils {
 
 		return simplifyFraction(new StringBuilder(d).deleteCharAt(index).toString() + "/" + str);
 	}
-	
+
 	/**
 	 * calculus 2 sequence method
 	 * 
@@ -58,10 +58,10 @@ public class MathUtils extends NumberUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static double decimalToFraction_2(final double d, double accuracy) {
+	public static double decimalToFraction_2(final double d, final double accuracy) {
 		return d / (1d - accuracy);
 	}
-	
+
 	/**
 	 * calculus 2 sequence method--------------------------------------------------------------------------------
 	 * 
@@ -72,7 +72,7 @@ public class MathUtils extends NumberUtils {
 	public static double decimalToFraction_3(final String d) {
 		final int index = d.indexOf("."),
 				accuracy = d.length() -  - 1;
-		
+
 		return Double.valueOf(d) / (1d - Math.pow(d.charAt(index), -accuracy));
 	}
 
@@ -544,15 +544,15 @@ public class MathUtils extends NumberUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static double roundToDecimalPlace(double value, int decimalPlaces) {
-	    int pow = 10;
-	    for (int i = 1; i < decimalPlaces; i++) {
-	        pow *= 10;
-	    }
-	    double tmp = value * pow,
-	    		tmpSub = tmp - (int) tmp;
+	public static double roundToDecimalPlace(final double value, final int decimalPlaces) {
+		int pow = 10;
+		for (int i = 1; i < decimalPlaces; i++) {
+			pow *= 10;
+		}
+		final double tmp = value * pow,
+				tmpSub = tmp - (int) tmp;
 
-	    return ((double) ((int) (value >= 0 ? (tmpSub >= 0.5f ? tmp + 1 : tmp) : (tmpSub >= -0.5f ? tmp : tmp - 1)))) / pow;
+		return ((double) ((int) (value >= 0 ? (tmpSub >= 0.5f ? tmp + 1 : tmp) : (tmpSub >= -0.5f ? tmp : tmp - 1)))) / pow;
 	}
 
 	/**
@@ -573,7 +573,7 @@ public class MathUtils extends NumberUtils {
 		}
 		return (numerator / gcf) + "/" + (denominator / gcf);
 	}
-	
+
 	/**
 	 * 
 	 * @param y1

@@ -10,10 +10,10 @@ public class Finance {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static double splitBill(double total, int people) {
+	public static double splitBill(final double total, final int people) {
 		return MathUtils.roundToDecimalPlace(total / people, 2);
 	}
-	
+
 	/**
 	 * 
 	 * @param total
@@ -21,7 +21,7 @@ public class Finance {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static double tip(double total, double percent) {
+	public static double tip(final double total, final double percent) {
 		return MathUtils.roundToDecimalPlace(percent / 100d * total, 2);
 	}
 }

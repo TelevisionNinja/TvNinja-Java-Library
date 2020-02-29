@@ -25,7 +25,7 @@ public class Timer {
 	 * 		nanoseconds
 	 * @author TelevisionNinja
 	 */
-	public long getTime(boolean check) {
+	public long getTime(final boolean check) {
 		if (check) {
 			this.elapsedTime = System.nanoTime() - this.initialTime + this.timeStartValue;
 		}

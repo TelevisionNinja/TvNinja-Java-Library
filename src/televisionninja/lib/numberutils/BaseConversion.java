@@ -78,7 +78,7 @@ public class BaseConversion {
 	public static String baseToBase_2(final String num, final long base1, final long base2) {
 		return BaseConversion.decToBase_2(BaseConversion.baseToDec_2(num, base1), base2);
 	}
-	
+
 	/**
 	 * 
 	 * @param num

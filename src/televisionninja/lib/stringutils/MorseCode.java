@@ -198,7 +198,7 @@ public class MorseCode {
 		}
 		return sentence.toString();
 	}
-	
+
 	/**
 	 * 
 	 * @param morseCode
@@ -259,20 +259,20 @@ public class MorseCode {
 		if (wordSpace == null) {
 			wordSpace = "   ";
 		}
-		
+
 		if (letterSpace == null) {
 			letterSpace = " ";
 		}
-		
+
 		final String[] words = morseCode.split(wordSpace);
 		final int length = words.length;
 		final StringBuilder sentence = new StringBuilder();
-		
+
 		for (int x = 0; x < length; x++) {
-			for (String letter : words[x].split(letterSpace)) {
+			for (final String letter : words[x].split(letterSpace)) {
 				sentence.append(StringUtils.convertToChars(morseCodeList, letter));
 			}
-			
+
 			if (x < length - 1) {
 				sentence.append(" ");
 			}
@@ -826,7 +826,7 @@ public class MorseCode {
 		}
 		return morseCode.toString();
 	}
-	
+
 	/**
 	 * uses Stirng.strip()
 	 * uses StringUtils.replaceChar()
@@ -884,7 +884,7 @@ public class MorseCode {
 				".--", /* w */
 				"-..-", /* x */
 				"-.--", /* y */
-				"--.."}; /* z */
+		"--.."}; /* z */
 
 		final StringBuilder morseCode = new StringBuilder();
 

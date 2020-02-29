@@ -169,9 +169,9 @@ public class ListUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static <E> String circularPrintList(List<E> list, int index) {
-		StringBuilder str = new StringBuilder();
-		int size = list.size();
+	public static <E> String circularPrintList(final List<E> list, final int index) {
+		final StringBuilder str = new StringBuilder();
+		final int size = list.size();
 		str.append("[");
 		for (int i = index; i < size + index - 1; i++) {
 			str.append(list.get(i % size) + ", ");
@@ -463,7 +463,7 @@ public class ListUtils {
 	public static List<String> stringToList_3(final String str, final String separator) {
 		return new ArrayList<>(List.of(str.split(separator)));
 	}
-	
+
 	/**
 	 * 
 	 * @param str

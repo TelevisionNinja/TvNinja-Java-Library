@@ -12,37 +12,38 @@ import java.util.List;
 public class CircularQueue<E> {
 	private int size = 0,
 			rear = 0;
-	private List<E> queue = new ArrayList<>();
-	
-	public CircularQueue(int size) {
+	private final List<E> queue = new ArrayList<>();
+
+	public CircularQueue(final int size) {
 		this.size = size;
 	}
-	
+
 	public void deQueue() {
-		queue.remove(0);
-		rear--;
+		this.queue.remove(0);
+		this.rear--;
 	}
-	
-	public void enQueue(E obj) {
-		if (rear + 1 <= size) {
-			rear++;
-			queue.add(obj);
+
+	public void enQueue(final E obj) {
+		if (this.rear + 1 <= this.size) {
+			this.rear++;
+			this.queue.add(obj);
 		}
 	}
-	
+
 	public E getFront() {
-		return queue.get(0);
+		return this.queue.get(0);
 	}
-	
+
 	public E getRear() {
-		return queue.get(rear - 1);
+		return this.queue.get(this.rear - 1);
 	}
-	
-	public void setSize(int size) {
+
+	public void setSize(final int size) {
 		this.size = size;
 	}
-	
+
+	@Override
 	public String toString() {
-		return queue.toString();
+		return this.queue.toString();
 	}
 }

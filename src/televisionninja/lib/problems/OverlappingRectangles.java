@@ -42,6 +42,7 @@ public class OverlappingRectangles {
 	 * puts the coordinates of the rect in the correct order
 	 * 
 	 * @param z
+	 * @author TelevisionNinja
 	 */
 	private static void cornerCorrect(final Rectangle z) {
 		if (z.one.y > z.two.y) {
@@ -61,6 +62,7 @@ public class OverlappingRectangles {
 	 * @param a
 	 * @param b
 	 * @return
+	 * @author TelevisionNinja
 	 */
 	public static double findArea(final Rectangle a, final Rectangle b) {
 		double length = 0,
@@ -123,6 +125,7 @@ public class OverlappingRectangles {
 	 * sorts the coordinate by the x values
 	 * 
 	 * @param z
+	 * @author TelevisionNinja
 	 */
 	private static void sortByX(final Rectangle z) {
 		if (z.one.x > z.two.x) {

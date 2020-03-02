@@ -5,7 +5,8 @@ package televisionninja.lib.switchutils.switchtoggle;
  *
  */
 public class Switch {
-	private boolean state = false;
+	private boolean state = false,
+			initialState = false;
 
 	private final SwitchActions actions;
 
@@ -15,6 +16,7 @@ public class Switch {
 	 * @author TelevisionNinja
 	 */
 	public Switch(final boolean initialState, final SwitchActions actions) {
+		this.initialState = initialState;
 		this.state = initialState;
 		this.actions = actions;
 	}
@@ -34,6 +36,15 @@ public class Switch {
 	public boolean getState() {
 		return this.state;
 	}
+	
+	/**
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public boolean getInitialState() {
+		return this.initialState;
+	}
 
 	/**
 	 * override this
@@ -50,12 +61,12 @@ public class Switch {
 	}
 
 	/**
-	 * 
+	 * resets the state back to the initial state
 	 * 
 	 * @author TelevisionNinja
 	 */
 	public void resetState() {
-		this.state = false;
+		this.state = this.initialState;
 	}
 
 	/**
@@ -65,6 +76,15 @@ public class Switch {
 	 */
 	public void setState(final boolean state) {
 		this.state = state;
+	}
+	
+	/**
+	 * 
+	 * @param state
+	 * @author TelevisionNinja
+	 */
+	public void setInitialState(final boolean state) {
+		this.initialState = state;
 	}
 
 	/**

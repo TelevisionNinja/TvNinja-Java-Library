@@ -24,10 +24,19 @@ public class Timer {
 	 * @param initialTime
 	 * @author TelevisionNinja
 	 */
-	public Timer(long initialTime) {
+	public Timer(final long initialTime) {
 		this.startValue = initialTime;
 	}
-	
+
+	/**
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public long getStartValue() {
+		return this.startValue;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -59,15 +68,6 @@ public class Timer {
 	 */
 	public void setStartValue(final long amount) {
 		this.startValue = amount;
-	}
-	
-	/**
-	 * 
-	 * @return
-	 * @author TelevisionNinja
-	 */
-	public long getStartValue() {
-		return this.startValue;
 	}
 
 	/**

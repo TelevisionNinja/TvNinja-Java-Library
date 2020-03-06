@@ -33,17 +33,17 @@ public class Switch {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public boolean getState() {
-		return this.state;
+	public boolean getInitialState() {
+		return this.initialState;
 	}
-	
+
 	/**
 	 * 
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public boolean getInitialState() {
-		return this.initialState;
+	public boolean getState() {
+		return this.state;
 	}
 
 	/**
@@ -74,17 +74,17 @@ public class Switch {
 	 * @param state
 	 * @author TelevisionNinja
 	 */
-	public void setState(final boolean state) {
-		this.state = state;
+	public void setInitialState(final boolean state) {
+		this.initialState = state;
 	}
-	
+
 	/**
 	 * 
 	 * @param state
 	 * @author TelevisionNinja
 	 */
-	public void setInitialState(final boolean state) {
-		this.initialState = state;
+	public void setState(final boolean state) {
+		this.state = state;
 	}
 
 	/**

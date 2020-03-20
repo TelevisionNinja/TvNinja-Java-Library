@@ -307,6 +307,39 @@ public class StringUtils {
 	}
 
 	/**
+	 * 
+	 * @param s
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static List<String> groupByChars_1(final String s) {
+		final List<String> splitted = new ArrayList<>();
+
+		final StringBuilder element = new StringBuilder();
+
+		for (int i = 0; i < s.length(); i++) {
+			final char current = s.charAt(i);
+			element.append(current);
+			if (i + 1 == s.length() || current != s.charAt(i + 1)) {
+				splitted.add(element.toString());
+				element.setLength(0);
+			}
+		}
+
+		return splitted;
+	}
+
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String[] groupByChars_2(final String s) {
+		return s.split("(?<=(.))(?!\\1)");
+	}
+
+	/**
 	 * Integer.toString() method
 	 * 
 	 * @param x

@@ -1,29 +1,22 @@
-/**
- * 
- */
 package televisionninja.lib.mathutils.unitsutils.time;
 
-import televisionninja.lib.stringutils.StringUtils;
-
-/**
- * @author TelevisionNinja
- *
- */
-public class TimeUtils24Hr {
+public class ClockUtils12Hr {
 	/**
 	 * works with any time addition
 	 * 
 	 * @param time
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param addedTime
 	 * 		hh:mm
 	 * @return
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @author TelevisionNinja
 	 */
 	public static String addClockTime(final String time, final String addedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
+		final String separator = ":",
+				space = " ";
+		final String[] tBoolean = time.split(space),
+				t = tBoolean[0].split(separator),
 				a = addedTime.split(separator);
 		final int length = t.length;
 		final long[] tl = new long[length],
@@ -34,41 +27,61 @@ public class TimeUtils24Hr {
 		}
 
 		final long sixtyMins = 60,
-				twentyFour = 24;
+				twelveHrs = 12;
+
+		if (tl[0] == twelveHrs) {
+			tl[0] = 0;
+		}
 
 		if (al[1] >= sixtyMins) {
 			al[0] += al[1] / sixtyMins;
 			al[1] %= sixtyMins;
 		}
 
-		al[0] %= twentyFour;
+		al[0] %= 24;
 
 		final long add = sixtyMins * (tl[0] + al[0]) + tl[1] + al[1],
 				mins = add % sixtyMins;
 		long hours = add / sixtyMins;
 
-		if (hours >= twentyFour) {
-			hours %= twentyFour;
+		String half = tBoolean[1].toLowerCase();
+
+		if (hours >= twelveHrs) {
+			if ((hours / twelveHrs) % 2 != 0) {
+				half = TimeUtils.amPmSwitcher(half);
+			}
+			hours %= twelveHrs;
 		}
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (hours == 0) {
+			hours = twelveHrs;
+		}
+		if (mins < 10) {
+			return hours + separator + "0" + mins + space + half;
+		}
+		else {
+			return hours + separator + mins + space + half;
+		}
 	}
-
+	
 	/**
 	 * negative answers
 	 * 
 	 * @param start
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param end
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @return
 	 * 		hh:mm elapsed
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_1(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
+		final String separator = ":",
+				space = " ";
+		final String[] sBoolean = start.split(space),
+				eBoolean = end.split(space),
+				s = sBoolean[0].split(separator),
+				e = eBoolean[0].split(separator);
 		final int length = s.length;
 		final long[] sl = new long[length],
 				el = new long[length];
@@ -77,16 +90,25 @@ public class TimeUtils24Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		final long eHrs = el[0],
+		long eHrs = el[0],
+				eMins = el[1],
 				sHrs = sl[0],
-				sMins = sl[1],
-				sixty = 60;
+				hours = 0;
+		final long sMins = sl[1],
+				sixty = 60,
+				twelve = 12;
 
-		long eMins = el[1],
-				hours = eHrs - sHrs;
+		if (sHrs == twelve) {
+			sHrs = 0;
+		}
+		if (eHrs == twelve) {
+			eHrs = 0;
+		}
 
-		if (sHrs > eHrs) {
-			hours += 24;
+		hours = eHrs - sHrs;
+
+		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
+			hours += twelve;
 		}
 
 		if (sMins > eMins) {
@@ -96,39 +118,59 @@ public class TimeUtils24Hr {
 		}
 		final long mins = eMins - sMins;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (mins < 10) {
+			return hours + separator + "0" + mins;
+		}
+		else {
+			return hours + separator + mins;
+		}
 	}
-
+	
 	/**
 	 * no negative answers
 	 * 
 	 * @param start
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param end
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @return
 	 * 		hh:mm elapsed
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_2(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
+		final String separator = ":",
+				space = " ";
+
+		final String[] sBoolean = start.split(space),
+				eBoolean = end.split(space),
+				s = sBoolean[0].split(separator),
+				e = eBoolean[0].split(separator);
+
 		final int length = s.length;
+
 		final long[] sl = new long[length],
 				el = new long[length];
+
 		for (int x = 0; x < length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
 
 		final long sixty = 60,
-				twentyFour = 24;
+				twelve = 12;
+
+		if (sl[0] == twelve) {
+			sl[0] = 0;
+		}
+
+		if (el[0] == twelve) {
+			el[0] = 0;
+		}
 
 		long hours = el[0] - sl[0];
 
-		if (sl[0] > el[0]) {
-			hours += twentyFour;
+		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
+			hours += twelve;
 		}
 
 		if (sl[1] > el[1]) {
@@ -138,44 +180,81 @@ public class TimeUtils24Hr {
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = el[1] - sl[1];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (mins < 10) {
+			return hours + separator + "0" + mins;
+		}
+		else {
+			return hours + separator + mins;
+		}
+	}
+	
+	/**
+	 * uses elapsedTime_2()
+	 * 
+	 * @param start
+	 * 		hh:mm am/pm
+	 * @param end
+	 * 		hh:mm am/pm
+	 * @return
+	 * 		mins elapsed
+	 * @author TelevisionNinja
+	 */
+	public static long elapsedTimeMins_1(final String start, final String end) {
+		final String time = elapsedTime_2(start, end);
+		final String[] timeArr = time.split(":");
+		return Long.parseLong(timeArr[0]) * 60 + Long.parseLong(timeArr[1]);
 	}
 
 	/**
 	 * no negative answers
 	 * 
 	 * @param start
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param end
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @return
 	 * 		mins elapsed
 	 * @author TelevisionNinja
 	 */
-	public static long elapsedTimeMins(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
+	public static long elapsedTimeMins_2(final String start, final String end) {
+		final String separator = ":",
+				space = " ";
+
+		final String[] sBoolean = start.split(space),
+				eBoolean = end.split(space),
+				s = sBoolean[0].split(separator),
+				e = eBoolean[0].split(separator);
+
 		final int length = s.length;
+
 		final long[] sl = new long[length],
 				el = new long[length];
+
 		for (int x = 0; x < length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
 
 		final long sixty = 60,
-				twentyFour = 24;
+				twelve = 12;
+
+		if (sl[0] == twelve) {
+			sl[0] = 0;
+		}
+
+		if (el[0] == twelve) {
+			el[0] = 0;
+		}
 
 		long hours = el[0] - sl[0];
 
-		if (sl[0] > el[0]) {
-			hours += twentyFour;
+		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
+			hours += twelve;
 		}
 
 		if (sl[1] > el[1]) {
@@ -185,26 +264,28 @@ public class TimeUtils24Hr {
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		return el[1] - sl[1] + hours * sixty;
 	}
-
+	
 	/**
 	 * works with any time subtraction
 	 * 
 	 * @param time
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param subtractedTime
 	 * 		hh:mm
 	 * @return
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @author TelevisionNinja
 	 */
 	public static String subtractClockTime(final String time, final String subtractedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
+		final String separator = ":",
+				space = " ";
+		final String[] tBoolean = time.split(space),
+				t = tBoolean[0].split(separator),
 				s = subtractedTime.split(separator);
 		final int length = t.length;
 		final long[] tl = new long[length],
@@ -215,7 +296,12 @@ public class TimeUtils24Hr {
 		}
 
 		final long sixtyMins = 60,
-				hrsInMins = 1440;
+				twelveHrs = 12,
+				hrsInMins = 720;
+
+		if (tl[0] == twelveHrs) {
+			tl[0] = 0;
+		}
 
 		if (sl[1] >= sixtyMins) {
 			sl[0] += sl[1] / sixtyMins;
@@ -228,15 +314,37 @@ public class TimeUtils24Hr {
 
 		long tMins = tl[0] * sixtyMins + tl[1];
 
+		String half = tBoolean[1].toLowerCase();
+
+		if (sl[0] >= twelveHrs) {
+			half = TimeUtils.amPmSwitcher(half);
+		}
+
 		if (sMins > tMins) {
 			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins,
-				hours = sub / sixtyMins;
+				mins = sub % sixtyMins;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		long hours = sub / sixtyMins;
+
+		if (hours >= twelveHrs) {
+			half = TimeUtils.amPmSwitcher(half);
+			hours %= twelveHrs;
+		}
+
+		if (hours == 0) {
+			hours = twelveHrs;
+		}
+
+		if (mins < 10) {
+			return hours + separator + "0" + mins + space + half;
+		}
+		else {
+			return hours + separator + mins + space + half;
+		}
 	}
 
 	/**
@@ -249,24 +357,25 @@ public class TimeUtils24Hr {
 	 * 		negative if your time zone is behind UTC
 	 * 		positive if your time zone is ahead of UTC
 	 * @return
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * 		what time it was from the given time
 	 * @author TelevisionNinja
 	 */
 	public static String timeAgo(final String subtractedTime, final String offset) {
-		final String separator = ":";
+		final String separator = ":",
+				space = " ";
 		final String[] s = subtractedTime.split(separator),
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				sixtyMins = 60,
+				twelveHrs = 12,
 				twentyFour = 24,
-				hrsInMins = 1440,
+				hrsInMins = 720,
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
 
 		final int length = s.length;
 
@@ -274,6 +383,22 @@ public class TimeUtils24Hr {
 
 		for (int x = 0; x < length; x++) {
 			sl[x] = Long.parseLong(s[x]);
+		}
+
+		long t = totalHours % twentyFour;
+
+		String half = "";
+		if (t >= twelveHrs) {
+			half = "pm";
+		}
+		else {
+			half = "am";
+		}
+
+		t %= twelveHrs;
+
+		if (t == twelveHrs) {
+			t = 0;
 		}
 
 		if (sl[1] >= sixtyMins) {
@@ -287,15 +412,35 @@ public class TimeUtils24Hr {
 
 		long tMins = t * sixtyMins + m;
 
+		if (sl[0] >= twelveHrs) {
+			half = TimeUtils.amPmSwitcher(half);
+		}
+
 		if (sMins > tMins) {
 			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins,
-				hours = sub / sixtyMins;
+				mins = sub % sixtyMins;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		long hours = sub / sixtyMins;
+
+		if (hours >= twelveHrs) {
+			half = TimeUtils.amPmSwitcher(half);
+			hours %= twelveHrs;
+		}
+
+		if (hours == 0) {
+			hours = twelveHrs;
+		}
+
+		if (mins < 10) {
+			return hours + separator + "0" + mins + space + half;
+		}
+		else {
+			return hours + separator + mins + space + half;
+		}
 	}
 
 	/**
@@ -308,23 +453,24 @@ public class TimeUtils24Hr {
 	 * 		negative if your time zone is behind UTC
 	 * 		positive if your time zone is ahead of UTC
 	 * @return
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * 		what time it'll be from the given time
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow(final String addedTime, final String offset) {
-		final String separator = ":";
+		final String separator = ":",
+				space = " ";
 		final String[] a = addedTime.split(separator),
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				sixtyMins = 60,
+				twelveHrs = 12,
 				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
 
 		final int length = a.length;
 
@@ -332,6 +478,22 @@ public class TimeUtils24Hr {
 
 		for (int x = 0; x < length; x++) {
 			al[x] = Long.parseLong(a[x]);
+		}
+
+		long t = totalHours % twentyFour;
+
+		String half = "";
+		if (t >= twelveHrs) {
+			half = "pm";
+		}
+		else {
+			half = "am";
+		}
+
+		t %= twelveHrs;
+
+		if (t == twelveHrs) {
+			t = 0;
 		}
 
 		if (al[1] >= sixtyMins) {
@@ -345,18 +507,29 @@ public class TimeUtils24Hr {
 				mins = add % sixtyMins;
 		long hours = add / sixtyMins;
 
-		if (hours >= twentyFour) {
-			hours %= twentyFour;
+		if (hours >= twelveHrs) {
+			if ((hours / twelveHrs) % 2 != 0) {
+				half = TimeUtils.amPmSwitcher(half);
+			}
+			hours %= twelveHrs;
 		}
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (hours == 0) {
+			hours = twelveHrs;
+		}
+		if (mins < 10) {
+			return hours + separator + "0" + mins + space + half;
+		}
+		else {
+			return hours + separator + mins + space + half;
+		}
 	}
 
 	/**
 	 * no negative answers
 	 * 
 	 * @param start
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param offset
 	 * 		hh:mm
 	 * 		negative if your time zone is behind UTC
@@ -369,16 +542,17 @@ public class TimeUtils24Hr {
 	public static String timeSince(final String start, final String offset) {
 		final String separator = ":";
 
-		final String[] s = start.split(separator),
+		final String[] sBoolean = start.split(" "),
+				s = sBoolean[0].split(separator),
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				sixtyMins = 60,
+				twelveHrs = 12,
 				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
 
 		final int length = s.length;
 
@@ -389,7 +563,32 @@ public class TimeUtils24Hr {
 		}
 
 		long m = totalMinutes % sixtyMins,
-				hours = t - sl[0];
+				hours = 0,
+				t = totalHours % twentyFour;
+
+		String half = "";
+		if (t >= twelveHrs) {
+			half = "pm";
+		}
+		else {
+			half = "am";
+		}
+
+		t %= twelveHrs;
+
+		if (sl[0] == twelveHrs) {
+			sl[0] = 0;
+		}
+
+		if (t == twelveHrs) {
+			t = 0;
+		}
+
+		hours = t - sl[0];
+
+		if (!(sBoolean[1].equalsIgnoreCase(half))) {
+			hours += twelveHrs;
+		}
 
 		if (sl[1] > m) {
 			final long multiply = sl[1] / sixtyMins + 1;
@@ -403,14 +602,19 @@ public class TimeUtils24Hr {
 
 		final long mins = m - sl[1];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (mins < 10) {
+			return hours + separator + "0" + mins;
+		}
+		else {
+			return hours + separator + mins;
+		}
 	}
-
+	
 	/**
 	 * no negative answers
 	 * 
 	 * @param end
-	 * 		hh:mm
+	 * 		hh:mm am/pm
 	 * @param offset
 	 * 		hh:mm
 	 * 		negative if your time zone is behind UTC
@@ -423,17 +627,18 @@ public class TimeUtils24Hr {
 	public static String timeUntil(final String end, final String offset) {
 		final String separator = ":";
 
-		final String[] e = end.split(separator),
+		final String[] eBoolean = end.split(" "),
+				e = eBoolean[0].split(separator),
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				sixtyMins = 60,
+				twelveHrs = 12,
 				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
 
 		final int length = e.length;
 
@@ -443,7 +648,32 @@ public class TimeUtils24Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		long hours = el[0] - t;
+		long hours = 0,
+				t = totalHours % twentyFour;
+
+		String half = "";
+		if (t >= twelveHrs) {
+			half = "pm";
+		}
+		else {
+			half = "am";
+		}
+
+		t %= twelveHrs;
+
+		if (t == twelveHrs) {
+			t = 0;
+		}
+
+		if (el[0] == twelveHrs) {
+			el[0] = 0;
+		}
+
+		hours = el[0] - t;
+
+		if (!(half.equalsIgnoreCase(eBoolean[1]))) {
+			hours += twelveHrs;
+		}
 
 		if (m > el[1]) {
 			final long multiply = m / sixtyMins + 1;
@@ -457,6 +687,11 @@ public class TimeUtils24Hr {
 
 		final long mins = el[1] - m;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		if (mins < 10) {
+			return hours + separator + "0" + mins;
+		}
+		else {
+			return hours + separator + mins;
+		}
 	}
 }

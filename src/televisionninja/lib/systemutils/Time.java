@@ -11,9 +11,6 @@ public class Time {
 	private String timeZone = "UTC";
 	private final String separator = ":",
 			zero = "0";
-	private final long sixty = 60,
-			ten = 10,
-			thousand = 1000;
 
 	/**
 	 * 
@@ -80,28 +77,28 @@ public class Time {
 	 */
 	public String getCurrentTime_2() {
 		final long totalMilliseconds = System.currentTimeMillis(),
-				currentMillisecond = totalMilliseconds % this.thousand,
-				totalSeconds = totalMilliseconds / this.thousand,
-				currentSecond = totalSeconds % this.sixty,
-				totalMinutes = totalSeconds / this.sixty,
-				currentMinute = totalMinutes % this.sixty,
-				totalHours = totalMinutes / this.sixty,
+				currentMillisecond = totalMilliseconds % 1000,
+				totalSeconds = totalMilliseconds / 1000,
+				currentSecond = totalSeconds % 60,
+				totalMinutes = totalSeconds / 60,
+				currentMinute = totalMinutes % 60,
+				totalHours = totalMinutes / 60,
 				currentHour = totalHours % 24;
 
 		String min = Long.toString(currentMinute),
 				sec = Long.toString(currentSecond),
 				mill = Long.toString(currentMillisecond);
 
-		if (currentMinute < this.ten) {
+		if (currentMinute < 10) {
 			min = this.zero + currentMinute;
 		}
 
-		if (currentSecond < this.ten) {
+		if (currentSecond < 10) {
 			sec = this.zero + currentSecond;
 		}
 
 		if (currentMillisecond < 100) {
-			if (currentMillisecond < this.ten) {
+			if (currentMillisecond < 10) {
 				mill = this.zero + this.zero + currentMillisecond;
 			}
 			else {
@@ -118,15 +115,15 @@ public class Time {
 	 */
 	public String getCurrentTimeHrsAndMins() {
 		final long totalMilliseconds = System.currentTimeMillis(),
-				totalSeconds = totalMilliseconds / this.thousand,
-				totalMinutes = totalSeconds / this.sixty,
-				currentMinute = totalMinutes % this.sixty,
-				totalHours = totalMinutes / this.sixty,
+				totalSeconds = totalMilliseconds / 1000,
+				totalMinutes = totalSeconds / 60,
+				currentMinute = totalMinutes % 60,
+				totalHours = totalMinutes / 60,
 				currentHour = totalHours % 24;
 
 		String min = Long.toString(currentMinute);
 
-		if (currentMinute < this.ten) {
+		if (currentMinute < 10) {
 			min = this.zero + currentMinute;
 		}
 		return currentHour + this.separator + min + " " + this.timeZone;

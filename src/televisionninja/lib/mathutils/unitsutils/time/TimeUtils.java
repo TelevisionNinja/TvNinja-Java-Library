@@ -415,18 +415,15 @@ public class TimeUtils {
 	 */
 	public static String twelveHrToTwentyFourHr_2(final String t12) {
 		String hours = "0";
-		final int zero = 0,
-				one = 1,
-				twelve = 12;
 		final String[] t = t12.split(":"),
-				m = t[one].split(" ");
-		long hr = Long.parseLong(t[zero]);
-		hr %= twelve;
-		if (m[one].toLowerCase().contains("p")) {
-			hr += twelve;
+				m = t[1].split(" ");
+		long hr = Long.parseLong(t[0]);
+		hr %= 12;
+		if (m[1].toLowerCase().contains("p")) {
+			hr += 12;
 		}
-		else if (m[one].toLowerCase().contains("a") && hr == twelve) {
-			hr = zero;
+		else if (m[1].toLowerCase().contains("a") && hr == 12) {
+			hr = 0;
 		}
 		if (hr < 10) {
 			hours += hr;
@@ -434,7 +431,7 @@ public class TimeUtils {
 		else {
 			hours = Long.toString(hr);
 		}
-		return hours + m[zero];
+		return hours + m[0];
 	}
 
 	/**
@@ -447,18 +444,15 @@ public class TimeUtils {
 	 */
 	public static String twelveHrToTwentyFourHr_3(final String t12, final boolean colon) {
 		String hours = "0";
-		final int zero = 0,
-				one = 1,
-				twelve = 12;
 		final String[] t = t12.split(":"),
-				m = t[one].split(" ");
-		long hr = Long.parseLong(t[zero]);
-		hr %= twelve;
-		if (m[one].toLowerCase().contains("p")) {
-			hr += twelve;
+				m = t[1].split(" ");
+		long hr = Long.parseLong(t[0]);
+		hr %= 12;
+		if (m[1].toLowerCase().contains("p")) {
+			hr += 12;
 		}
-		else if (m[one].toLowerCase().contains("a") && hr == twelve) {
-			hr = zero;
+		else if (m[1].toLowerCase().contains("a") && hr == 12) {
+			hr = 0;
 		}
 		if (hr < 10) {
 			hours += hr;
@@ -468,10 +462,10 @@ public class TimeUtils {
 		}
 
 		if (colon) {
-			return hours + ":" + m[zero];
+			return hours + ":" + m[0];
 		}
 		else {
-			return hours + m[zero];
+			return hours + m[0];
 		}
 	}
 
@@ -505,19 +499,16 @@ public class TimeUtils {
 	 */
 	public static String twentyFourHrToTwelveHr_2(final String t24) {
 		String end = "am";
-		final int twelve= 12,
-				two = 2,
-				zero = 0;
-		long hr = Long.parseLong(t24.substring(zero, two));
+		long hr = Long.parseLong(t24.substring(0, 2));
 		hr %= 24;
-		if (hr >= twelve) {
-			hr %= twelve;
+		if (hr >= 12) {
+			hr %= 12;
 			end = "pm";
 		}
-		if (hr == zero) {
-			hr = twelve;
+		if (hr == 0) {
+			hr = 12;
 		}
-		return hr + ":" + t24.substring(two) + " " + end;
+		return hr + ":" + t24.substring(2) + " " + end;
 	}
 
 	/**
@@ -531,24 +522,21 @@ public class TimeUtils {
 	public static String twentyFourHrToTwelveHr_3(final String t24, final boolean colon) {
 		String end = "am";
 		final String space = " ";
-		final int twelve= 12,
-				two = 2,
-				zero = 0;
-		long hr = Long.parseLong(t24.substring(zero, two));
+		long hr = Long.parseLong(t24.substring(0, 2));
 		hr %= 24;
-		if (hr >= twelve) {
-			hr %= twelve;
+		if (hr >= 12) {
+			hr %= 12;
 			end = "pm";
 		}
-		if (hr == zero) {
-			hr = twelve;
+		if (hr == 0) {
+			hr = 12;
 		}
 
 		if (colon) {
-			return hr + t24.substring(two) + space + end;
+			return hr + t24.substring(2) + space + end;
 		}
 		else {
-			return hr + ":" + t24.substring(two) + space + end;
+			return hr + ":" + t24.substring(2) + space + end;
 		}
 	}
 

@@ -26,35 +26,32 @@ public class ClockUtils12Hr {
 			al[x] = Long.parseLong(a[x]);
 		}
 
-		final long sixtyMins = 60,
-				twelveHrs = 12;
-
-		if (tl[0] == twelveHrs) {
+		if (tl[0] == 12) {
 			tl[0] = 0;
 		}
 
-		if (al[1] >= sixtyMins) {
-			al[0] += al[1] / sixtyMins;
-			al[1] %= sixtyMins;
+		if (al[1] >= 60) {
+			al[0] += al[1] / 60;
+			al[1] %= 60;
 		}
 
 		al[0] %= 24;
 
-		final long add = sixtyMins * (tl[0] + al[0]) + tl[1] + al[1],
-				mins = add % sixtyMins;
-		long hours = add / sixtyMins;
+		final long add = 60 * (tl[0] + al[0]) + tl[1] + al[1],
+				mins = add % 60;
+		long hours = add / 60;
 
 		String half = tBoolean[1].toLowerCase();
 
-		if (hours >= twelveHrs) {
-			if ((hours / twelveHrs) % 2 != 0) {
+		if (hours >= 12) {
+			if ((hours / 12) % 2 != 0) {
 				half = TimeUtils.amPmSwitcher(half);
 			}
-			hours %= twelveHrs;
+			hours %= 12;
 		}
 
 		if (hours == 0) {
-			hours = twelveHrs;
+			hours = 12;
 		}
 		if (mins < 10) {
 			return hours + separator + "0" + mins + space + half;
@@ -63,7 +60,7 @@ public class ClockUtils12Hr {
 			return hours + separator + mins + space + half;
 		}
 	}
-	
+
 	/**
 	 * negative answers
 	 * 
@@ -94,27 +91,25 @@ public class ClockUtils12Hr {
 				eMins = el[1],
 				sHrs = sl[0],
 				hours = 0;
-		final long sMins = sl[1],
-				sixty = 60,
-				twelve = 12;
+		final long sMins = sl[1];
 
-		if (sHrs == twelve) {
+		if (sHrs == 12) {
 			sHrs = 0;
 		}
-		if (eHrs == twelve) {
+		if (eHrs == 12) {
 			eHrs = 0;
 		}
 
 		hours = eHrs - sHrs;
 
 		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
-			hours += twelve;
+			hours += 12;
 		}
 
 		if (sMins > eMins) {
-			final long multiply = sMins / sixty + 1;
+			final long multiply = sMins / 60 + 1;
 			hours -= multiply;
-			eMins += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			eMins += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 		final long mins = eMins - sMins;
 
@@ -125,7 +120,7 @@ public class ClockUtils12Hr {
 			return hours + separator + mins;
 		}
 	}
-	
+
 	/**
 	 * no negative answers
 	 * 
@@ -156,27 +151,24 @@ public class ClockUtils12Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		final long sixty = 60,
-				twelve = 12;
-
-		if (sl[0] == twelve) {
+		if (sl[0] == 12) {
 			sl[0] = 0;
 		}
 
-		if (el[0] == twelve) {
+		if (el[0] == 12) {
 			el[0] = 0;
 		}
 
 		long hours = el[0] - sl[0];
 
 		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
-			hours += twelve;
+			hours += 12;
 		}
 
 		if (sl[1] > el[1]) {
-			final long multiply = sl[1] / sixty + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			el[1] += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
@@ -192,7 +184,7 @@ public class ClockUtils12Hr {
 			return hours + separator + mins;
 		}
 	}
-	
+
 	/**
 	 * uses elapsedTime_2()
 	 * 
@@ -240,36 +232,33 @@ public class ClockUtils12Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		final long sixty = 60,
-				twelve = 12;
-
-		if (sl[0] == twelve) {
+		if (sl[0] == 12) {
 			sl[0] = 0;
 		}
 
-		if (el[0] == twelve) {
+		if (el[0] == 12) {
 			el[0] = 0;
 		}
 
 		long hours = el[0] - sl[0];
 
 		if (!(sBoolean[1].equalsIgnoreCase(eBoolean[1]))) {
-			hours += twelve;
+			hours += 12;
 		}
 
 		if (sl[1] > el[1]) {
-			final long multiply = sl[1] / sixty + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			el[1] += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
 			hours += 24;
 		}
 
-		return el[1] - sl[1] + hours * sixty;
+		return el[1] - sl[1] + hours * 60;
 	}
-	
+
 	/**
 	 * works with any time subtraction
 	 * 
@@ -295,48 +284,45 @@ public class ClockUtils12Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		final long sixtyMins = 60,
-				twelveHrs = 12,
-				hrsInMins = 720;
 
-		if (tl[0] == twelveHrs) {
+		if (tl[0] == 12) {
 			tl[0] = 0;
 		}
 
-		if (sl[1] >= sixtyMins) {
-			sl[0] += sl[1] / sixtyMins;
-			sl[1] %= sixtyMins;
+		if (sl[1] >= 60) {
+			sl[0] += sl[1] / 60;
+			sl[1] %= 60;
 		}
 
 		sl[0] %= 24;
 
-		final long sMins = sl[0] * sixtyMins + sl[1];
+		final long sMins = sl[0] * 60 + sl[1];
 
-		long tMins = tl[0] * sixtyMins + tl[1];
+		long tMins = tl[0] * 60 + tl[1];
 
 		String half = tBoolean[1].toLowerCase();
 
-		if (sl[0] >= twelveHrs) {
+		if (sl[0] >= 12) {
 			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		if (sMins > tMins) {
-			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			tMins += sMins - (sMins % 720) + 720; //12 hours in mins
 			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins;
+				mins = sub % 60;
 
-		long hours = sub / sixtyMins;
+		long hours = sub / 60;
 
-		if (hours >= twelveHrs) {
+		if (hours >= 12) {
 			half = TimeUtils.amPmSwitcher(half);
-			hours %= twelveHrs;
+			hours %= 12;
 		}
 
 		if (hours == 0) {
-			hours = twelveHrs;
+			hours = 12;
 		}
 
 		if (mins < 10) {
@@ -368,14 +354,10 @@ public class ClockUtils12Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twelveHrs = 12,
-				twentyFour = 24,
-				hrsInMins = 720,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]);
 
 		final int length = s.length;
 
@@ -385,54 +367,54 @@ public class ClockUtils12Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		long t = totalHours % twentyFour;
+		long t = totalHours % 24;
 
 		String half = "";
-		if (t >= twelveHrs) {
+		if (t >= 12) {
 			half = "pm";
 		}
 		else {
 			half = "am";
 		}
 
-		t %= twelveHrs;
+		t %= 12;
 
-		if (t == twelveHrs) {
+		if (t == 12) {//-----------------------------------------------------------------------------------------------
 			t = 0;
 		}
 
-		if (sl[1] >= sixtyMins) {
-			sl[0] += sl[1] / sixtyMins;
-			sl[1] %= sixtyMins;
+		if (sl[1] >= 60) {
+			sl[0] += sl[1] / 60;
+			sl[1] %= 60;
 		}
 
-		sl[0] %= twentyFour;
+		sl[0] %= 24;
 
-		final long sMins = sl[0] * sixtyMins + sl[1];
+		final long sMins = sl[0] * 60 + sl[1];
 
-		long tMins = t * sixtyMins + m;
+		long tMins = t * 60 + m;
 
-		if (sl[0] >= twelveHrs) {
+		if (sl[0] >= 12) {
 			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		if (sMins > tMins) {
-			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			tMins += sMins - (sMins % 720) + 720; //12 hours in mins
 			half = TimeUtils.amPmSwitcher(half);
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins;
+				mins = sub % 60;
 
-		long hours = sub / sixtyMins;
+		long hours = sub / 60;
 
-		if (hours >= twelveHrs) {
+		if (hours >= 12) {
 			half = TimeUtils.amPmSwitcher(half);
-			hours %= twelveHrs;
+			hours %= 12;
 		}
 
 		if (hours == 0) {
-			hours = twelveHrs;
+			hours = 12;
 		}
 
 		if (mins < 10) {
@@ -464,13 +446,10 @@ public class ClockUtils12Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twelveHrs = 12,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]);
 
 		final int length = a.length;
 
@@ -480,42 +459,42 @@ public class ClockUtils12Hr {
 			al[x] = Long.parseLong(a[x]);
 		}
 
-		long t = totalHours % twentyFour;
+		long t = totalHours % 24;
 
 		String half = "";
-		if (t >= twelveHrs) {
+		if (t >= 12) {
 			half = "pm";
 		}
 		else {
 			half = "am";
 		}
 
-		t %= twelveHrs;
+		t %= 12;
 
-		if (t == twelveHrs) {
+		if (t == 12) {//-----------------------------------------------------------------------------------------------
 			t = 0;
 		}
 
-		if (al[1] >= sixtyMins) {
-			al[0] += al[1] / sixtyMins;
-			al[1] %= sixtyMins;
+		if (al[1] >= 60) {
+			al[0] += al[1] / 60;
+			al[1] %= 60;
 		}
 
-		al[0] %= twentyFour;
+		al[0] %= 24;
 
-		final long add = sixtyMins * (t + al[0]) + m + al[1],
-				mins = add % sixtyMins;
-		long hours = add / sixtyMins;
+		final long add = 60 * (t + al[0]) + m + al[1],
+				mins = add % 60;
+		long hours = add / 60;
 
-		if (hours >= twelveHrs) {
-			if ((hours / twelveHrs) % 2 != 0) {
+		if (hours >= 12) {
+			if ((hours / 12) % 2 != 0) {
 				half = TimeUtils.amPmSwitcher(half);
 			}
-			hours %= twelveHrs;
+			hours %= 12;
 		}
 
 		if (hours == 0) {
-			hours = twelveHrs;
+			hours = 12;
 		}
 		if (mins < 10) {
 			return hours + separator + "0" + mins + space + half;
@@ -547,12 +526,9 @@ public class ClockUtils12Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twelveHrs = 12,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]);
 
 		final int length = s.length;
 
@@ -562,42 +538,42 @@ public class ClockUtils12Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		long m = totalMinutes % sixtyMins,
+		long m = totalMinutes % 60,
 				hours = 0,
-				t = totalHours % twentyFour;
+				t = totalHours % 24;
 
 		String half = "";
-		if (t >= twelveHrs) {
+		if (t >= 12) {
 			half = "pm";
 		}
 		else {
 			half = "am";
 		}
 
-		t %= twelveHrs;
+		t %= 12;
 
-		if (sl[0] == twelveHrs) {
+		if (sl[0] == 12) {
 			sl[0] = 0;
 		}
 
-		if (t == twelveHrs) {
+		if (t == 12) {//-----------------------------------------------------------------------------------------------
 			t = 0;
 		}
 
 		hours = t - sl[0];
 
 		if (!(sBoolean[1].equalsIgnoreCase(half))) {
-			hours += twelveHrs;
+			hours += 12;
 		}
 
 		if (sl[1] > m) {
-			final long multiply = sl[1] / sixtyMins + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			m += sixtyMins * multiply;//eMins += sMins / 60 * 60 + 60
+			m += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = m - sl[1];
@@ -609,7 +585,7 @@ public class ClockUtils12Hr {
 			return hours + separator + mins;
 		}
 	}
-	
+
 	/**
 	 * no negative answers
 	 * 
@@ -632,13 +608,10 @@ public class ClockUtils12Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twelveHrs = 12,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]);
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]);
 
 		final int length = e.length;
 
@@ -649,40 +622,40 @@ public class ClockUtils12Hr {
 		}
 
 		long hours = 0,
-				t = totalHours % twentyFour;
+				t = totalHours % 24;
 
 		String half = "";
-		if (t >= twelveHrs) {
+		if (t >= 12) {
 			half = "pm";
 		}
 		else {
 			half = "am";
 		}
 
-		t %= twelveHrs;
+		t %= 12;
 
-		if (t == twelveHrs) {
+		if (t == 12) {//-----------------------------------------------------------------------------------------------
 			t = 0;
 		}
 
-		if (el[0] == twelveHrs) {
+		if (el[0] == 12) {
 			el[0] = 0;
 		}
 
 		hours = el[0] - t;
 
 		if (!(half.equalsIgnoreCase(eBoolean[1]))) {
-			hours += twelveHrs;
+			hours += 12;
 		}
 
 		if (m > el[1]) {
-			final long multiply = m / sixtyMins + 1;
+			final long multiply = m / 60 + 1;
 			hours -= multiply;
-			el[1] += sixtyMins * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = el[1] - m;

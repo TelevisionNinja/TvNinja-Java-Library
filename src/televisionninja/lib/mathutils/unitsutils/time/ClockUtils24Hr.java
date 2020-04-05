@@ -33,22 +33,19 @@ public class ClockUtils24Hr {
 			al[x] = Long.parseLong(a[x]);
 		}
 
-		final long sixtyMins = 60,
-				twentyFour = 24;
-
-		if (al[1] >= sixtyMins) {
-			al[0] += al[1] / sixtyMins;
-			al[1] %= sixtyMins;
+		if (al[1] >= 60) {
+			al[0] += al[1] / 60;
+			al[1] %= 60;
 		}
 
-		al[0] %= twentyFour;
+		al[0] %= 24;
 
-		final long add = sixtyMins * (tl[0] + al[0]) + tl[1] + al[1],
-				mins = add % sixtyMins;
-		long hours = add / sixtyMins;
+		final long add = 60 * (tl[0] + al[0]) + tl[1] + al[1],
+				mins = add % 60;
+		long hours = add / 60;
 
-		if (hours >= twentyFour) {
-			hours %= twentyFour;
+		if (hours >= 24) {
+			hours %= 24;
 		}
 
 		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
@@ -79,8 +76,7 @@ public class ClockUtils24Hr {
 
 		final long eHrs = el[0],
 				sHrs = sl[0],
-				sMins = sl[1],
-				sixty = 60;
+				sMins = sl[1];
 
 		long eMins = el[1],
 				hours = eHrs - sHrs;
@@ -90,9 +86,9 @@ public class ClockUtils24Hr {
 		}
 
 		if (sMins > eMins) {
-			final long multiply = sMins / sixty + 1;
+			final long multiply = sMins / 60 + 1;
 			hours -= multiply;
-			eMins += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			eMins += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 		final long mins = eMins - sMins;
 
@@ -122,23 +118,20 @@ public class ClockUtils24Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		final long sixty = 60,
-				twentyFour = 24;
-
 		long hours = el[0] - sl[0];
 
 		if (sl[0] > el[0]) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		if (sl[1] > el[1]) {
-			final long multiply = sl[1] / sixty + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			el[1] += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = el[1] - sl[1];
@@ -169,26 +162,23 @@ public class ClockUtils24Hr {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		final long sixty = 60,
-				twentyFour = 24;
-
 		long hours = el[0] - sl[0];
 
 		if (sl[0] > el[0]) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		if (sl[1] > el[1]) {
-			final long multiply = sl[1] / sixty + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			el[1] += sixty * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
-		return el[1] - sl[1] + hours * sixty;
+		return el[1] - sl[1] + hours * 60;
 	}
 
 	/**
@@ -214,27 +204,24 @@ public class ClockUtils24Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		final long sixtyMins = 60,
-				hrsInMins = 1440;
-
-		if (sl[1] >= sixtyMins) {
-			sl[0] += sl[1] / sixtyMins;
-			sl[1] %= sixtyMins;
+		if (sl[1] >= 60) {
+			sl[0] += sl[1] / 60;
+			sl[1] %= 60;
 		}
 
 		sl[0] %= 24;
 
-		final long sMins = sl[0] * sixtyMins + sl[1];
+		final long sMins = sl[0] * 60 + sl[1];
 
-		long tMins = tl[0] * sixtyMins + tl[1];
+		long tMins = tl[0] * 60 + tl[1];
 
 		if (sMins > tMins) {
-			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			tMins += sMins - (sMins % 1440) + 1440; //24 hrs in mins
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins,
-				hours = sub / sixtyMins;
+				mins = sub % 60,
+				hours = sub / 60;
 
 		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
 	}
@@ -259,14 +246,11 @@ public class ClockUtils24Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twentyFour = 24,
-				hrsInMins = 1440,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
+				t = totalHours % 24;
 
 		final int length = s.length;
 
@@ -276,24 +260,24 @@ public class ClockUtils24Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		if (sl[1] >= sixtyMins) {
-			sl[0] += sl[1] / sixtyMins;
-			sl[1] %= sixtyMins;
+		if (sl[1] >= 60) {
+			sl[0] += sl[1] / 60;
+			sl[1] %= 60;
 		}
 
-		sl[0] %= twentyFour;
+		sl[0] %= 24;
 
-		final long sMins = sl[0] * sixtyMins + sl[1];
+		final long sMins = sl[0] * 60 + sl[1];
 
-		long tMins = t * sixtyMins + m;
+		long tMins = t * 60 + m;
 
 		if (sMins > tMins) {
-			tMins += sMins - (sMins % hrsInMins) + hrsInMins;
+			tMins += sMins - (sMins % 1440) + 1440; //24 hrs in mins
 		}
 
 		final long sub = tMins - sMins,
-				mins = sub % sixtyMins,
-				hours = sub / sixtyMins;
+				mins = sub % 60,
+				hours = sub / 60;
 
 		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
 	}
@@ -318,13 +302,11 @@ public class ClockUtils24Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
+				t = totalHours % 24;
 
 		final int length = a.length;
 
@@ -334,19 +316,19 @@ public class ClockUtils24Hr {
 			al[x] = Long.parseLong(a[x]);
 		}
 
-		if (al[1] >= sixtyMins) {
-			al[0] += al[1] / sixtyMins;
-			al[1] %= sixtyMins;
+		if (al[1] >= 60) {
+			al[0] += al[1] / 60;
+			al[1] %= 60;
 		}
 
-		al[0] %= twentyFour;
+		al[0] %= 24;
 
-		final long add = sixtyMins * (t + al[0]) + m + al[1],
-				mins = add % sixtyMins;
-		long hours = add / sixtyMins;
+		final long add = 60 * (t + al[0]) + m + al[1],
+				mins = add % 60;
+		long hours = add / 60;
 
-		if (hours >= twentyFour) {
-			hours %= twentyFour;
+		if (hours >= 24) {
+			hours %= 24;
 		}
 
 		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
@@ -373,12 +355,10 @@ public class ClockUtils24Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
+				t = totalHours % 24;
 
 		final int length = s.length;
 
@@ -388,17 +368,17 @@ public class ClockUtils24Hr {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
-		long m = totalMinutes % sixtyMins,
+		long m = totalMinutes % 60,
 				hours = t - sl[0];
 
 		if (sl[1] > m) {
-			final long multiply = sl[1] / sixtyMins + 1;
+			final long multiply = sl[1] / 60 + 1;
 			hours -= multiply;
-			m += sixtyMins * multiply;//eMins += sMins / 60 * 60 + 60
+			m += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = m - sl[1];
@@ -427,13 +407,11 @@ public class ClockUtils24Hr {
 				offsetArr = offset.split(separator);
 
 		final long totalMilliseconds = System.currentTimeMillis(),
-				sixtyMins = 60,
-				twentyFour = 24,
 				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / sixtyMins + Long.parseLong(offsetArr[1]),
-				m = totalMinutes % sixtyMins,
-				totalHours = totalMinutes / sixtyMins + Long.parseLong(offsetArr[0]),
-				t = totalHours % twentyFour;
+				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
+				m = totalMinutes % 60,
+				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
+				t = totalHours % 24;
 
 		final int length = e.length;
 
@@ -446,13 +424,13 @@ public class ClockUtils24Hr {
 		long hours = el[0] - t;
 
 		if (m > el[1]) {
-			final long multiply = m / sixtyMins + 1;
+			final long multiply = m / 60 + 1;
 			hours -= multiply;
-			el[1] += sixtyMins * multiply;//eMins += sMins / 60 * 60 + 60
+			el[1] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		if (hours < 0) {
-			hours += twentyFour;
+			hours += 24;
 		}
 
 		final long mins = el[1] - m;

@@ -306,7 +306,7 @@ public class Statistics {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static List<Double> mode_6(final double[] arr){
+	public static List<Double> mode_6(final double[] arr) {
 		Arrays.sort(arr);
 		long modeCount = 0;
 		int x = 0;
@@ -350,7 +350,7 @@ public class Statistics {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static List<Double> mode_6(final List<Double> list){
+	public static List<Double> mode_6(final List<Double> list) {
 		list.sort(Comparator.naturalOrder());
 		long modeCount = 0;
 		int x = 0;

@@ -177,7 +177,7 @@ public class SequenceProblems {
 	/**
 	 * online method
 	 * 
-	 * Returns the length and the LCIS of  two arrays arr1[0..n-1] and arr2[0..m-1] and prints LCIS
+	 * Returns the length and the LCIS of two arrays arr1[0..n-1] and arr2[0..m-1] and prints LCIS
 	 * 
 	 * @param arr1
 	 * @param n

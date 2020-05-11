@@ -331,49 +331,46 @@ public class TimeUtils {
 		 * y d h m s
 		 */
 
-		long minsSub = 0,
-				hoursSub = 0,
-				daysSub = 0,
-				yearsSub = 0;
+		if (el[0] < sl[0]) {
+			for (int x = 0; x < length; x++) {
+				final long temp = el[x];
+				el[x] = sl[x];
+				sl[x] = temp;
+			}
+		}
 
 		if (sl[4] > el[4]) {
 			final long multiply = sl[4] / 60 + 1;
-			minsSub = -multiply;
+			el[3] -= multiply;
 			el[4] += 60 * multiply;
 		}
 
 		final long sec = el[4] - sl[4];
 
-		el[3] += minsSub;
-
 		if (sl[3] > el[3]) {
 			final long multiply = sl[3] / 60 + 1;
-			hoursSub = -multiply;
+			el[2] -= multiply;
 			el[3] += 60 * multiply;//eMins += sMins / 60 * 60 + 60
 		}
 
 		final long mins = el[3] - sl[3];
 
-		el[2] += hoursSub;
-
 		if (sl[2] > el[2]) {
 			final long multiply = sl[2] / 24 + 1;
-			daysSub = -multiply;
+			el[1] -= multiply;
 			el[2] += 24 * multiply;
 		}
 
 		final long hours = el[2] - sl[2];
 
-		el[1] += daysSub;
-
 		if (sl[1] > el[1]) {
 			final long multiply = sl[1] / 365 + 1;
-			yearsSub = -multiply;
+			el[0] -= multiply;
 			el[1] += 365 * multiply;
 		}
 
 		final long days = el[1] - sl[1],
-				years = el[0] - sl[0] + yearsSub;
+				years = el[0] - sl[0];
 
 		return years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
 	}

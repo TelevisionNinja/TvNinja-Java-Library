@@ -313,8 +313,9 @@ public class TimeUtils {
 	 * 		y:ddd:hh:mm:ss
 	 * @author TelevisionNinja
 	 */
-	public static String subtractTime(final String time, final String sub) {
+	public static String subtractTime_1(final String time, final String sub) {
 		final String separator = ":";
+		String sign = "";
 		final String[] s = sub.split(separator),
 				e = time.split(separator);
 		final int length = s.length;
@@ -337,6 +338,7 @@ public class TimeUtils {
 				el[x] = sl[x];
 				sl[x] = temp;
 			}
+			sign = "-";
 		}
 
 		if (sl[4] > el[4]) {
@@ -372,7 +374,78 @@ public class TimeUtils {
 		final long days = el[1] - sl[1],
 				years = el[0] - sl[0];
 
-		return years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+		return sign + years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+	}
+
+	/**
+	 * 
+	 * @param sub
+	 * 		y:ddd:hh:mm:ss
+	 * @param time
+	 * 		y:ddd:hh:mm:ss
+	 * @return
+	 * 		y:ddd:hh:mm:ss
+	 * @author TelevisionNinja
+	 */
+	public static String subtractTime_2(final String time, final String sub) {
+		final String separator = ":";
+		String sign = "";
+		final String[] s = sub.split(separator),
+				e = time.split(separator);
+		final int length = s.length;
+		final long[] sl = new long[length],
+				el = new long[length];
+		for (int x = 0; x < length; x++) {
+			sl[x] = Long.parseLong(s[x]);
+			el[x] = Long.parseLong(e[x]);
+		}
+
+		/*
+		 * indices
+		 * 0 1 2 3 4
+		 * y d h m s
+		 */
+
+		if (el[0] < sl[0]) {
+			for (int x = 0; x < length; x++) {
+				final long temp = el[x];
+				el[x] = sl[x];
+				sl[x] = temp;
+			}
+
+			sign = "-";
+		}
+
+		if (sl[4] > el[4]) {
+			el[3] -= 1;
+			el[4] += 60;
+		}
+
+		final long sec = el[4] - sl[4];
+
+		if (sl[3] > el[3]) {
+			el[2] -= 1;
+			el[3] += 60;
+		}
+
+		final long mins = el[3] - sl[3];
+
+		if (sl[2] > el[2]) {
+			el[1] -= 1;
+			el[2] += 24;
+		}
+
+		final long hours = el[2] - sl[2];
+
+		if (sl[1] > el[1]) {
+			el[0] -= 1;
+			el[1] += 365;
+		}
+
+		final long days = el[1] - sl[1],
+				years = el[0] - sl[0];
+
+		return sign + years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
 	}
 
 	/**

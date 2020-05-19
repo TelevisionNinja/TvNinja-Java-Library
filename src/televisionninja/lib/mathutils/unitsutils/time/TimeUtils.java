@@ -185,6 +185,16 @@ public class TimeUtils {
 
 	/**
 	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String intArrToTimeStr(final int[] arr) {
+		return arr[0] + ":" + arr[1];
+	}
+
+	/**
+	 * 
 	 * @param m
 	 * @return
 	 * @author TelevisionNinja
@@ -301,6 +311,20 @@ public class TimeUtils {
 	 */
 	public static double secToMin(final double s) {
 		return s / 60d;
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String strArrToTimeStr(final String[] arr) {
+		if (arr[2] == null) {
+			return arr[0] + ':' + arr[1];
+		}
+
+		return arr[0] + ':' + arr[1] + ' ' + arr[2];
 	}
 
 	/**
@@ -448,6 +472,24 @@ public class TimeUtils {
 				years = el[0] - sl[0];
 
 		return sign + years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+	}
+
+	/**
+	 * 
+	 * @param time
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String[] timeStrToStrArr(final String time) {
+		final String[] valuesAndHalf = time.split(" "),
+				valuesString = valuesAndHalf[0].split(":"),
+				finalArr = {valuesString[0], valuesString[1], null};
+
+		if (valuesAndHalf.length > 1) {
+			finalArr[2] = valuesAndHalf[1];
+		}
+
+		return finalArr;
 	}
 
 	/**

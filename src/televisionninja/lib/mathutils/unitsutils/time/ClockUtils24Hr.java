@@ -775,7 +775,7 @@ public class ClockUtils24Hr {
 	 * 		positive if your time zone is ahead of UTC
 	 * @return
 	 * 		hh:mm
-	 * 		what time it'll be from the given time
+	 * 		what time it'll be from now using the given time
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow_1(final String addedTime, final String offset) {
@@ -828,7 +828,7 @@ public class ClockUtils24Hr {
 	 * 		positive if your time zone is ahead of UTC
 	 * @return
 	 * 		hh:mm
-	 * 		what time it'll be from the given time
+	 * 		what time it'll be from now using the given time
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow_2(final String addedTime, final String offset) {

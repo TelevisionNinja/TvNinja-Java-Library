@@ -304,6 +304,7 @@ public class TimeUtils {
 	}
 
 	/**
+	 * safest version
 	 * 
 	 * @param sub
 	 * 		y:ddd:hh:mm:ss
@@ -378,6 +379,7 @@ public class TimeUtils {
 	}
 
 	/**
+	 * efficient version
 	 * 
 	 * @param sub
 	 * 		y:ddd:hh:mm:ss
@@ -541,6 +543,41 @@ public class TimeUtils {
 
 	/**
 	 * 
+	 * @param t12
+	 * 		hh:mm am/pm
+	 * @param colon
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String twelveHrToTwentyFourHr_4(final String t12, final boolean colon) {
+		String hours = "0";
+		final String[] t = t12.split(":"),
+				m = t[1].split(" ");
+		long hr = Long.parseLong(t[0]);
+
+		hr %= 12;
+
+		if (m[1].toLowerCase().contains("p")) {
+			hr += 12;
+		}
+
+		if (hr < 10) {
+			hours += hr;
+		}
+		else {
+			hours = Long.toString(hr);
+		}
+
+		if (colon) {
+			return hours + ":" + m[0];
+		}
+		else {
+			return hours + m[0];
+		}
+	}
+
+	/**
+	 * 
 	 * @param t24
 	 * 		hhmm
 	 * @return
@@ -582,6 +619,7 @@ public class TimeUtils {
 	}
 
 	/**
+	 * any value to 12 hr
 	 * 
 	 * @param t24
 	 * 		hhmm or hh:mm
@@ -598,6 +636,36 @@ public class TimeUtils {
 			hr %= 12;
 			end = "pm";
 		}
+		if (hr == 0) {
+			hr = 12;
+		}
+
+		if (colon) {
+			return hr + t24.substring(2) + space + end;
+		}
+		else {
+			return hr + ":" + t24.substring(2) + space + end;
+		}
+	}
+
+	/**
+	 * 
+	 * @param t24
+	 * 		hhmm or hh:mm
+	 * @param colon
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String twentyFourHrToTwelveHr_4(final String t24, final boolean colon) {
+		String end = "am";
+		final String space = " ";
+		long hr = Long.parseLong(t24.substring(0, 2));
+
+		if (hr >= 12) {
+			hr %= 12;
+			end = "pm";
+		}
+
 		if (hr == 0) {
 			hr = 12;
 		}

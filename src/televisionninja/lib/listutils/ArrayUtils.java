@@ -324,6 +324,22 @@ public class ArrayUtils {
 	}
 
 	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String[] longArrToStrArr(final long[] arr) {
+		final String[] strings = new String[arr.length];
+
+		for (int x = 0; x < arr.length; x++) {
+			strings[x] = String.valueOf(arr[x]);
+		}
+
+		return strings;
+	}
+
+	/**
 	 * online method
 	 * 
 	 * @param arr
@@ -353,6 +369,22 @@ public class ArrayUtils {
 			arr[arr.length - i - 1] = temp;
 		}
 		return arr;
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] strArrToLongArr(final String[] arr) {
+		final long[] longs = new long[arr.length];
+
+		for (int x = 0; x < arr.length; x++) {
+			longs[x] = Long.parseLong(arr[x]);
+		}
+
+		return longs;
 	}
 
 	/**

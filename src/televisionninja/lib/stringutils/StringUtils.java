@@ -33,11 +33,10 @@ public class StringUtils {
 	 */
 	public static String addLeadingToString_1(final String str, final char c, final long size) {
 		final StringBuilder sized = new StringBuilder();
-		for (long y = 0; y < (size - str.length()); y++) {
+		for (long y = 0; y < size; y++) {
 			sized.append(c);
 		}
-		sized.append(str);
-		return sized.toString();
+		return (sized.toString() + str).substring(str.length());
 	}
 
 	/**
@@ -50,10 +49,11 @@ public class StringUtils {
 	 */
 	public static String addLeadingToString_2(final String str, final char c, final long size) {
 		final StringBuilder sized = new StringBuilder();
-		for (long y = 0; y < size; y++) {
+		for (long y = 0; y < (size - str.length()); y++) {
 			sized.append(c);
 		}
-		return (sized.toString() + str).substring(str.length());
+		sized.append(str);
+		return sized.toString();
 	}
 
 	/**

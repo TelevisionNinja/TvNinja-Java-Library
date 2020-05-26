@@ -1,5 +1,6 @@
 package televisionninja.lib.mathutils.unitsutils.time;
 
+import televisionninja.lib.listutils.ArrayUtils;
 import televisionninja.lib.stringutils.StringUtils;
 
 /**
@@ -65,7 +66,15 @@ public class TimeUtils {
 			years += carry;
 		}
 
-		return years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+		return years +
+				separator +
+				days +
+				separator +
+				hours +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 
 	/**
@@ -91,6 +100,110 @@ public class TimeUtils {
 	 */
 	public static double centuryToDecade(final double d) {
 		return d * 10d;
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUpClockTime(long hours, long mins) {
+		if (mins >= 60) {
+			hours += mins / 60;
+
+			mins %= 60;
+
+			hours %= 24;
+		}
+		else if (mins < 0) {
+			final long multiply = Math.abs(mins) / 60 + 1;
+
+			hours -= multiply;
+
+			mins += multiply * 60;
+		}
+
+		if (hours >= 24) {
+			hours %= 24;
+		}
+		else if (hours < 0) {
+			hours += (Math.abs(hours) / 24 + 1) * 24;
+		}
+
+		return new long[]{hours, mins};
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUpClockTime(final long[] arr) {
+		if (arr[1] >= 60) {
+			arr[0] += arr[1] / 60;
+
+			arr[1] %= 60;
+
+			arr[0] %= 24;
+		}
+		else if (arr[1] < 0) {
+			final long multiply = Math.abs(arr[1]) / 60 + 1;
+
+			arr[0] -= multiply;
+
+			arr[1] += multiply * 60;
+		}
+
+		if (arr[0] >= 24) {
+			arr[0] %= 24;
+		}
+		else if (arr[0] < 0) {
+			arr[0] += (Math.abs(arr[0]) / 24 + 1) * 24;
+		}
+
+		return arr;
+	}
+
+	/**
+	 * 
+	 * @param hours
+	 * @param mins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUpClockTimeOverflow(long hours, long mins) {
+		hours += mins / 60;
+
+		mins %= 60;
+
+		hours %= 24;
+
+		return new long[] {hours, mins};
+	}
+
+	/**
+	 * 
+	 * @param hours
+	 * @param mins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUpClockTimeUnderflow(long hours, long mins) {
+		if (mins < 0) {
+			final long multiply = Math.abs(mins) / 60 + 1;
+
+			hours -= multiply;
+
+			mins += multiply * 60;
+		}
+
+		if (hours < 0) {
+			hours += (Math.abs(hours) / 24 + 1) * 24;
+		}
+
+		return new long[] {hours, mins};
 	}
 
 	/**
@@ -144,6 +257,32 @@ public class TimeUtils {
 	}
 
 	/**
+	 * 
+	 * @param offset
+	 * 		hh:mm
+	 * 
+	 * 		both the hours and minutes must be positive or negative
+	 * 		negative if your time zone is behind UTC
+	 * 		positive if your time zone is ahead of UTC
+	 * @return
+	 * 		long[]
+	 * 
+	 * 		long[0] = 24 hours
+	 * 		long[1] = mins
+	 * @author TelevisionNinja
+	 */
+	public static long[] get24HrTimeArr(final String offset) {
+		final long[] offsetArr = ArrayUtils.strArrToLongArr(TimeUtils.timeStrToStrArr(offset));
+
+		final long totalMilliseconds = System.currentTimeMillis(),
+				totalSeconds = totalMilliseconds / 1000,
+				totalMinutes = totalSeconds / 60 + offsetArr[1],
+				totalHours = totalMinutes / 60 + offsetArr[0];
+
+		return new long[] {totalHours % 24, totalMinutes % 60};
+	}
+
+	/**
 	 * System.currentTimeMillis()
 	 * 
 	 * @return
@@ -184,13 +323,57 @@ public class TimeUtils {
 	}
 
 	/**
+	 * does not work for negative values in the array
 	 * 
 	 * @param arr
+	 * @param timeOrValue
+	 * 		set to true if the array contains time
+	 * 		set to false if the array contains values
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static String intArrToTimeStr(final int[] arr) {
-		return arr[0] + ":" + arr[1];
+	public static String longArrTo24HrTimeStr(final long[] arr, final boolean timeOrValue) {
+		String time = ":";
+		if (arr[1] < 10) {
+			time += "0" + arr[1];
+		}
+		else {
+			time += arr[1];
+		}
+
+		time = arr[0] + time;
+
+		if (timeOrValue && arr[0] < 10) {
+			time = "0" + time;
+		}
+
+		return time;
+	}
+
+	/**
+	 * does not work for negative values
+	 * 
+	 * @param hours
+	 * @param mins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String longsTo24HrTimeStr(final long hours, final long mins, final boolean timeOrValue) {
+		String time = ":";
+		if (mins < 10) {
+			time += "0" + mins;
+		}
+		else {
+			time += mins;
+		}
+
+		time = hours + time;
+
+		if (timeOrValue && hours < 10) {
+			time = "0" + time;
+		}
+
+		return time;
 	}
 
 	/**
@@ -314,17 +497,30 @@ public class TimeUtils {
 	}
 
 	/**
+	 * does not work for negative values in the array
 	 * 
 	 * @param arr
+	 * @param timeOrValue
+	 * 		set to true if the array contains time
+	 * 		set to false if the array contains values
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static String strArrToTimeStr(final String[] arr) {
-		if (arr[2] == null) {
-			return arr[0] + ':' + arr[1];
+	public static String strArrToTimeStr(final String[] arr, final boolean timeOrValue) {
+		String time = ":" + StringUtils.addLeadingToString_1(arr[1], '0', 2);
+
+		if (timeOrValue) {
+			time = StringUtils.addLeadingToString_1(arr[0], '0', 2) + time;
+		}
+		else {
+			time = arr[0] + time;
 		}
 
-		return arr[0] + ':' + arr[1] + ' ' + arr[2];
+		if (arr.length < 3) {
+			return time;
+		}
+
+		return time + " " + arr[2];
 	}
 
 	/**
@@ -399,7 +595,16 @@ public class TimeUtils {
 		final long days = el[1] - sl[1],
 				years = el[0] - sl[0];
 
-		return sign + years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+		return sign +
+				years +
+				separator +
+				days +
+				separator +
+				hours +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 
 	/**
@@ -471,10 +676,33 @@ public class TimeUtils {
 		final long days = el[1] - sl[1],
 				years = el[0] - sl[0];
 
-		return sign + years + separator + days + separator + hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(sec), '0', 2);
+		return sign +
+				years +
+				separator +
+				days +
+				separator +
+				hours +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
+				separator +
+				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 
 	/**
+	 * this will throw an exception if the time string is not correctly formatted
+	 * 
+	 * @param time
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] timeStr24HrToLongArr(final String time) {
+		final String[] str = time.split(":");
+
+		return new long[]{Long.parseLong(str[0]), Long.parseLong(str[1])};
+	}
+
+	/**
+	 * accepts 12 and 24 hr time
 	 * 
 	 * @param time
 	 * @return
@@ -483,10 +711,13 @@ public class TimeUtils {
 	public static String[] timeStrToStrArr(final String time) {
 		final String[] valuesAndHalf = time.split(" "),
 				valuesString = valuesAndHalf[0].split(":"),
-				finalArr = {valuesString[0], valuesString[1], null};
+				finalArr;
 
 		if (valuesAndHalf.length > 1) {
-			finalArr[2] = valuesAndHalf[1];
+			finalArr = new String[]{valuesString[0], valuesString[1], valuesAndHalf[1]};
+		}
+		else {
+			finalArr = new String[]{valuesString[0], valuesString[1]};
 		}
 
 		return finalArr;

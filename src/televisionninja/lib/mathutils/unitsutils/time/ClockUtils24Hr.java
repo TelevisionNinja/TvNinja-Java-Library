@@ -22,13 +22,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String addClockTime_1(final String time, final String addedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
-				a = addedTime.split(separator);
-		final int length = t.length;
-		final long[] tl = new long[length],
-				al = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] t = time.split(":"),
+				a = addedTime.split(":");
+
+		final long[] tl = new long[t.length],
+				al = new long[t.length];
+		for (int x = 0; x < t.length; x++) {
 			tl[x] = Long.parseLong(t[x]);
 			al[x] = Long.parseLong(a[x]);
 		}
@@ -44,7 +43,7 @@ public class ClockUtils24Hr {
 				mins = add % 60,
 				hours = (add / 60) % 24;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -59,13 +58,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String addClockTime_2(final String time, final String addedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
-				a = addedTime.split(separator);
-		final int length = t.length;
-		final long[] tl = new long[length],
-				al = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] t = time.split(":"),
+				a = addedTime.split(":");
+
+		final long[] tl = new long[t.length],
+				al = new long[t.length];
+		for (int x = 0; x < t.length; x++) {
 			tl[x] = Long.parseLong(t[x]);
 			al[x] = Long.parseLong(a[x]);
 		}
@@ -87,7 +85,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -102,13 +100,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_1(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -131,7 +128,7 @@ public class ClockUtils24Hr {
 		}
 		final long mins = eMins - sMins;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -146,13 +143,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_2(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -175,7 +171,7 @@ public class ClockUtils24Hr {
 
 		final long mins = el[1] - sl[1];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -190,13 +186,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_3(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -215,7 +210,7 @@ public class ClockUtils24Hr {
 
 		final long mins = el[1] - sl[1];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -232,13 +227,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_4(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -263,7 +257,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -280,13 +274,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime_5(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -303,7 +296,7 @@ public class ClockUtils24Hr {
 		final long mins = el[1] - sl[1],
 				hours = el[0] - sl[0];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -318,13 +311,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static long elapsedTimeMins_1(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -362,13 +354,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static long elapsedTimeMins_2(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -410,13 +401,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static long elapsedTimeMins_3(final String start, final String end) {
-		final String separator = ":";
-		final String[] s = start.split(separator),
-				e = end.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = start.split(":"),
+				e = end.split(":");
+
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -447,13 +437,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractClockTime_1(final String time, final String subtractedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
-				s = subtractedTime.split(separator);
-		final int length = t.length;
-		final long[] tl = new long[length],
-				sl = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] t = time.split(":"),
+				s = subtractedTime.split(":");
+
+		final long[] tl = new long[t.length],
+				sl = new long[t.length];
+		for (int x = 0; x < t.length; x++) {
 			tl[x] = Long.parseLong(t[x]);
 			sl[x] = Long.parseLong(s[x]);
 		}
@@ -477,7 +466,7 @@ public class ClockUtils24Hr {
 				mins = sub % 60,
 				hours = sub / 60;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -494,13 +483,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractClockTime_2(final String time, final String subtractedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
-				s = subtractedTime.split(separator);
-		final int length = t.length;
-		final long[] tl = new long[length],
-				sl = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] t = time.split(":"),
+				s = subtractedTime.split(":");
+
+		final long[] tl = new long[t.length],
+				sl = new long[t.length];
+		for (int x = 0; x < t.length; x++) {
 			tl[x] = Long.parseLong(t[x]);
 			sl[x] = Long.parseLong(s[x]);
 		}
@@ -532,7 +520,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -549,13 +537,12 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractClockTime_3(final String time, final String subtractedTime) {
-		final String separator = ":";
-		final String[] t = time.split(separator),
-				s = subtractedTime.split(separator);
-		final int length = t.length;
-		final long[] tl = new long[length],
-				sl = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] t = time.split(":"),
+				s = subtractedTime.split(":");
+
+		final long[] tl = new long[t.length],
+				sl = new long[t.length];
+		for (int x = 0; x < t.length; x++) {
 			tl[x] = Long.parseLong(t[x]);
 			sl[x] = Long.parseLong(s[x]);
 		}
@@ -579,7 +566,7 @@ public class ClockUtils24Hr {
 		final long mins = tl[1] - sl[1],
 				hours = tl[0] - sl[0];
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -598,22 +585,19 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeAgo_1(final String subtractedTime, final String offset) {
-		final String separator = ":";
-		final String[] s = subtractedTime.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = subtractedTime.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % 60,
 				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
-				t = totalHours % 24;
+				h = totalHours % 24;
 
-		final int length = s.length;
+		final long[] sl = new long[s.length];
 
-		final long[] sl = new long[length];
-
-		for (int x = 0; x < length; x++) {
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
@@ -626,7 +610,7 @@ public class ClockUtils24Hr {
 
 		final long sMins = sl[0] * 60 + sl[1];
 
-		long tMins = t * 60 + m;
+		long tMins = h * 60 + m;
 
 		if (sMins > tMins) {
 			tMins += sMins - (sMins % 1440) + 1440; //24 hrs in mins
@@ -636,7 +620,7 @@ public class ClockUtils24Hr {
 				mins = sub % 60,
 				hours = sub / 60;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -657,9 +641,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeAgo_2(final String subtractedTime, final String offset) {
-		final String separator = ":";
-		final String[] s = subtractedTime.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = subtractedTime.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -702,7 +685,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -723,9 +706,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeAgo_3(final String subtractedTime, final String offset) {
-		final String separator = ":";
-		final String[] s = subtractedTime.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = subtractedTime.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -760,7 +742,7 @@ public class ClockUtils24Hr {
 		final long mins = m - sl[1],
 				hours = h - sl[0];
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -779,22 +761,19 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow_1(final String addedTime, final String offset) {
-		final String separator = ":";
-		final String[] a = addedTime.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] a = addedTime.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % 60,
 				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
-				t = totalHours % 24;
+				h = totalHours % 24;
 
-		final int length = a.length;
+		final long[] al = new long[a.length];
 
-		final long[] al = new long[length];
-
-		for (int x = 0; x < length; x++) {
+		for (int x = 0; x < a.length; x++) {
 			al[x] = Long.parseLong(a[x]);
 		}
 
@@ -805,7 +784,7 @@ public class ClockUtils24Hr {
 
 		al[0] %= 24;
 
-		final long add = 60 * (t + al[0]) + m + al[1],
+		final long add = 60 * (h + al[0]) + m + al[1],
 				mins = add % 60;
 		long hours = add / 60;
 
@@ -813,7 +792,7 @@ public class ClockUtils24Hr {
 			hours %= 24;
 		}
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -832,9 +811,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow_2(final String addedTime, final String offset) {
-		final String separator = ":";
-		final String[] a = addedTime.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] a = addedTime.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -843,11 +821,9 @@ public class ClockUtils24Hr {
 				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
 				h = totalHours % 24;
 
-		final int length = a.length;
+		final long[] al = new long[a.length];
 
-		final long[] al = new long[length];
-
-		for (int x = 0; x < length; x++) {
+		for (int x = 0; x < a.length; x++) {
 			al[x] = Long.parseLong(a[x]);
 		}
 
@@ -868,7 +844,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return StringUtils.addLeadingToString_2(Long.toString(hours), '0', 2) + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -887,27 +863,23 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeSince_1(final String start, final String offset) {
-		final String separator = ":";
-
-		final String[] s = start.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = start.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
 				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
-				t = totalHours % 24;
+				h = totalHours % 24;
 
-		final int length = s.length;
+		final long[] sl = new long[s.length];
 
-		final long[] sl = new long[length];
-
-		for (int x = 0; x < length; x++) {
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 		}
 
 		long m = totalMinutes % 60,
-				hours = t - sl[0];
+				hours = h - sl[0];
 
 		if (sl[1] > m) {
 			final long multiply = sl[1] / 60 + 1;
@@ -921,7 +893,7 @@ public class ClockUtils24Hr {
 
 		final long mins = m - sl[1];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -942,10 +914,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeSince_2(final String start, final String offset) {
-		final String separator = ":";
-
-		final String[] s = start.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = start.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -981,7 +951,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -1002,10 +972,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeSince_3(final String start, final String offset) {
-		final String separator = ":";
-
-		final String[] s = start.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] s = start.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -1033,7 +1001,7 @@ public class ClockUtils24Hr {
 		final long mins = m - sl[1],
 				hours = h - sl[0];
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -1052,27 +1020,23 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeUntil_1(final String end, final String offset) {
-		final String separator = ":";
-
-		final String[] e = end.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] e = end.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
 				totalMinutes = totalSeconds / 60 + Long.parseLong(offsetArr[1]),
 				m = totalMinutes % 60,
 				totalHours = totalMinutes / 60 + Long.parseLong(offsetArr[0]),
-				t = totalHours % 24;
+				h = totalHours % 24;
 
-		final int length = e.length;
+		final long[] el = new long[e.length];
 
-		final long[] el = new long[length];
-
-		for (int x = 0; x < length; x++) {
+		for (int x = 0; x < e.length; x++) {
 			el[x] = Long.parseLong(e[x]);
 		}
 
-		long hours = el[0] - t;
+		long hours = el[0] - h;
 
 		if (m > el[1]) {
 			final long multiply = m / 60 + 1;
@@ -1086,7 +1050,7 @@ public class ClockUtils24Hr {
 
 		final long mins = el[1] - m;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -1107,10 +1071,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeUntil_2(final String end, final String offset) {
-		final String separator = ":";
-
-		final String[] e = end.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] e = end.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -1145,7 +1107,7 @@ public class ClockUtils24Hr {
 
 		hours %= 24;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 
 	/**
@@ -1166,10 +1128,8 @@ public class ClockUtils24Hr {
 	 * @author TelevisionNinja
 	 */
 	public static String timeUntil_3(final String end, final String offset) {
-		final String separator = ":";
-
-		final String[] e = end.split(separator),
-				offsetArr = offset.split(separator);
+		final String[] e = end.split(":"),
+				offsetArr = offset.split(":");
 
 		final long totalMilliseconds = System.currentTimeMillis(),
 				totalSeconds = totalMilliseconds / 1000,
@@ -1196,6 +1156,6 @@ public class ClockUtils24Hr {
 		final long mins = el[1] - m,
 				hours = el[0] - h;
 
-		return hours + separator + StringUtils.addLeadingToString_2(Long.toString(mins), '0', 2);
+		return hours + ":" + StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2);
 	}
 }

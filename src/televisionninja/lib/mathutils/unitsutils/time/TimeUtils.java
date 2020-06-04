@@ -1,6 +1,5 @@
 package televisionninja.lib.mathutils.unitsutils.time;
 
-import televisionninja.lib.listutils.ArrayUtils;
 import televisionninja.lib.stringutils.StringUtils;
 
 /**
@@ -104,11 +103,40 @@ public class TimeUtils {
 
 	/**
 	 * 
+	 * @param hours
+	 * @param mins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String[] cleanUp12HrClockTimeOverflow(long hours, final long mins, String half) {
+		if (half.toLowerCase().contains("p")) {
+			hours += 12;
+		}
+
+		final long[] values = cleanUp24HrClockTimeOverflow(hours, mins);
+
+		if (values[0] >= 12) {
+			values[0] %= 12;
+			half = "pm";
+		}
+		else {
+			half = "am";
+		}
+
+		if (values[0] == 0) {
+			values[0] = 12;
+		}
+
+		return new String[] {String.valueOf(values[0]), String.valueOf(values[1]), half};
+	}
+
+	/**
+	 * 
 	 * @param arr
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static long[] cleanUpClockTime(long hours, long mins) {
+	public static long[] cleanUp24HrClockTime_1(long hours, long mins) {
 		if (mins >= 60) {
 			hours += mins / 60;
 
@@ -140,7 +168,7 @@ public class TimeUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static long[] cleanUpClockTime(final long[] arr) {
+	public static long[] cleanUp24HrClockTime_1(final long[] arr) {
 		if (arr[1] >= 60) {
 			arr[0] += arr[1] / 60;
 
@@ -168,19 +196,40 @@ public class TimeUtils {
 
 	/**
 	 * 
-	 * @param hours
-	 * @param mins
+	 * @param arr
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static long[] cleanUpClockTimeOverflow(long hours, long mins) {
-		hours += mins / 60;
+	public static long[] cleanUp24HrClockTime_2(final long hours, final long mins) {
+		long[] result = new long[]{hours, mins};
 
-		mins %= 60;
+		if (mins >= 60 || hours >= 24) {
+			result = cleanUp24HrClockTimeOverflow(result);
+		}
 
-		hours %= 24;
+		if (mins < 0 || hours < 0) {
+			result = cleanUp24HrClockTimeUnderflow(result);
+		}
 
-		return new long[] {hours, mins};
+		return result;
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUp24HrClockTime_2(long[] arr) {
+		if (arr[1] >= 60 || arr[0] >= 24) {
+			arr = cleanUp24HrClockTimeOverflow(arr);
+		}
+
+		if (arr[1] < 0 || arr[0] < 0) {
+			arr = cleanUp24HrClockTimeUnderflow(arr);
+		}
+
+		return arr;
 	}
 
 	/**
@@ -190,12 +239,49 @@ public class TimeUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static long[] cleanUpClockTimeUnderflow(long hours, long mins) {
+	public static long[] cleanUp24HrClockTimeOverflow(long hours, long mins) {
+		if (mins >= 60) {
+			hours += mins / 60;
+			mins %= 60;
+		}
+
+		if (hours >= 24) {
+			hours %= 24;
+		}
+
+		return new long[] {hours, mins};
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUp24HrClockTimeOverflow(final long[] arr) {
+		if (arr[1] >= 60) {
+			arr[0] += arr[1] / 60;
+			arr[1] %= 60;
+		}
+
+		if (arr[0] >= 24) {
+			arr[0] %= 24;
+		}
+
+		return arr;
+	}
+
+	/**
+	 * 
+	 * @param hours
+	 * @param mins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUp24HrClockTimeUnderflow(long hours, long mins) {
 		if (mins < 0) {
 			final long multiply = Math.abs(mins) / 60 + 1;
-
 			hours -= multiply;
-
 			mins += multiply * 60;
 		}
 
@@ -204,6 +290,26 @@ public class TimeUtils {
 		}
 
 		return new long[] {hours, mins};
+	}
+
+	/**
+	 * 
+	 * @param arr
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] cleanUp24HrClockTimeUnderflow(final long[] arr) {
+		if (arr[1] < 0) {
+			final long multiply = Math.abs(arr[1]) / 60 + 1;
+			arr[0] -= multiply;
+			arr[1] += multiply * 60;
+		}
+
+		if (arr[0] < 0) {
+			arr[0] += (Math.abs(arr[0]) / 24 + 1) * 24;
+		}
+
+		return arr;
 	}
 
 	/**
@@ -272,11 +378,9 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static long[] get24HrTimeArr(final String offset) {
-		final long[] offsetArr = ArrayUtils.strArrToLongArr(TimeUtils.timeStrToStrArr(offset));
+		final long[] offsetArr = timeStr24HrToLongArr(offset);
 
-		final long totalMilliseconds = System.currentTimeMillis(),
-				totalSeconds = totalMilliseconds / 1000,
-				totalMinutes = totalSeconds / 60 + offsetArr[1],
+		final long totalMinutes = System.currentTimeMillis() / 1000 / 60 + offsetArr[1],
 				totalHours = totalMinutes / 60 + offsetArr[0];
 
 		return new long[] {totalHours % 24, totalMinutes % 60};
@@ -333,15 +437,14 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static String longArrTo24HrTimeStr(final long[] arr, final boolean timeOrValue) {
-		String time = ":";
+		String time = arr[0] + ":";
+
 		if (arr[1] < 10) {
 			time += "0" + arr[1];
 		}
 		else {
 			time += arr[1];
 		}
-
-		time = arr[0] + time;
 
 		if (timeOrValue && arr[0] < 10) {
 			time = "0" + time;
@@ -359,15 +462,14 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static String longsTo24HrTimeStr(final long hours, final long mins, final boolean timeOrValue) {
-		String time = ":";
+		String time = hours + ":";
+
 		if (mins < 10) {
 			time += "0" + mins;
 		}
 		else {
 			time += mins;
 		}
-
-		time = hours + time;
 
 		if (timeOrValue && hours < 10) {
 			time = "0" + time;
@@ -506,14 +608,38 @@ public class TimeUtils {
 	 * @return
 	 * @author TelevisionNinja
 	 */
-	public static String strArrToTimeStr(final String[] arr, final boolean timeOrValue) {
-		String time = ":" + StringUtils.addLeadingToString_1(arr[1], '0', 2);
+	public static String strArrToTimeStr_1(final String[] arr, final boolean timeOrValue) {
+		String time = ":" + StringUtils.addLeadingToString_2(arr[1], '0', 2);
 
 		if (timeOrValue) {
-			time = StringUtils.addLeadingToString_1(arr[0], '0', 2) + time;
+			time = StringUtils.addLeadingToString_2(arr[0], '0', 2) + time;
 		}
 		else {
 			time = arr[0] + time;
+		}
+
+		if (arr.length < 3) {
+			return time;
+		}
+
+		return time + " " + arr[2];
+	}
+
+	/**
+	 * does not work for negative values in the array
+	 * 
+	 * @param arr
+	 * @param timeOrValue
+	 * 		set to true if the array contains time
+	 * 		set to false if the array contains values
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String strArrToTimeStr_2(final String[] arr, final boolean timeOrValue) {
+		String time = arr[0] + ":" + StringUtils.addLeadingToString_2(arr[1], '0', 2);
+
+		if (timeOrValue && arr[0].length() < 2) {
+			time = "0" + time;
 		}
 
 		if (arr.length < 3) {
@@ -851,6 +977,40 @@ public class TimeUtils {
 
 	/**
 	 * 
+	 * @param t12
+	 * 		hh:mm am/pm
+	 * @param colon
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String twelveHrToTwentyFourHr_5(final String t12, final boolean colon) {
+		final String[] valuesAndHalf = t12.split(" "),
+				values = valuesAndHalf[0].split(":");
+
+		long longHours = Long.parseLong(values[0]);
+
+		longHours %= 12;
+
+		if (valuesAndHalf[1].toLowerCase().contains("p")) {
+			longHours += 12;
+		}
+
+		values[0] = String.valueOf(longHours);
+
+		if (longHours < 10) {
+			values[0] = "0" + values[0];
+		}
+
+		if (colon) {
+			return values[0] + ":" + values[1];
+		}
+		else {
+			return values[0] + values[1];
+		}
+	}
+
+	/**
+	 * 
 	 * @param t24
 	 * 		hhmm
 	 * @return
@@ -902,7 +1062,6 @@ public class TimeUtils {
 	 */
 	public static String twentyFourHrToTwelveHr_3(final String t24, final boolean colon) {
 		String end = "am";
-		final String space = " ";
 		long hr = Long.parseLong(t24.substring(0, 2));
 		hr %= 24;
 		if (hr >= 12) {
@@ -914,10 +1073,10 @@ public class TimeUtils {
 		}
 
 		if (colon) {
-			return hr + t24.substring(2) + space + end;
+			return hr + t24.substring(2) + " " + end;
 		}
 		else {
-			return hr + ":" + t24.substring(2) + space + end;
+			return hr + ":" + t24.substring(2) + " " + end;
 		}
 	}
 
@@ -931,7 +1090,6 @@ public class TimeUtils {
 	 */
 	public static String twentyFourHrToTwelveHr_4(final String t24, final boolean colon) {
 		String end = "am";
-		final String space = " ";
 		long hr = Long.parseLong(t24.substring(0, 2));
 
 		if (hr >= 12) {
@@ -944,10 +1102,46 @@ public class TimeUtils {
 		}
 
 		if (colon) {
-			return hr + t24.substring(2) + space + end;
+			return hr + t24.substring(2) + " " + end;
 		}
 		else {
-			return hr + ":" + t24.substring(2) + space + end;
+			return hr + ":" + t24.substring(2) + " " + end;
+		}
+	}
+
+	/**
+	 * 
+	 * @param t24
+	 * 		hhmm or hh:mm
+	 * @param colon
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String twentyFourHrToTwelveHr_5(final String t24) {
+		String end = "am";
+
+		int index = 2;
+
+		if (t24.contains(":")) {
+			index = 3;
+		}
+
+		long hr = Long.parseLong(t24.substring(0, 2));
+
+		if (hr >= 12) {
+			hr %= 12;
+			end = "pm";
+		}
+
+		if (hr == 0) {
+			hr = 12;
+		}
+
+		if (index == 3) {
+			return hr + t24.substring(index) + " " + end;
+		}
+		else {
+			return hr + ":" + t24.substring(index) + " " + end;
 		}
 	}
 

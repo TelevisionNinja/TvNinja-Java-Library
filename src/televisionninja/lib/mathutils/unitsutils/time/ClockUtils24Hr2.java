@@ -19,7 +19,21 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static long[] addClockTime(final long tHours, final long tMins, final long aHours, final long aMins) {
-		return TimeUtils.cleanUpClockTime(tHours + aHours, tMins + aMins);
+		return TimeUtils.cleanUp24HrClockTime_2(tHours + aHours, tMins + aMins);
+	}
+
+	/**
+	 * works with any time addition
+	 * 
+	 * @param tHours
+	 * @param tMins
+	 * @param aHours
+	 * @param aMins
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static long[] addClockTime(final long[] tArr, final long[] aArr) {
+		return TimeUtils.cleanUp24HrClockTime_2(tArr[0] + aArr[0], tArr[1] + aArr[1]);
 	}
 
 	/**
@@ -34,10 +48,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String addClockTime(final String time, final String addedTime) {
-		final long[] tl = TimeUtils.timeStr24HrToLongArr(time),
-				al = TimeUtils.timeStr24HrToLongArr(addedTime);
-
-		return TimeUtils.longArrTo24HrTimeStr(addClockTime(tl[0], tl[1], al[0], al[1]), true);
+		return TimeUtils.longArrTo24HrTimeStr(addClockTime(TimeUtils.timeStr24HrToLongArr(time), TimeUtils.timeStr24HrToLongArr(addedTime)), true);
 	}
 
 	/**
@@ -52,10 +63,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String elapsedTime(final String start, final String end) {
-		final long[] sl = TimeUtils.timeStr24HrToLongArr(start),
-				el = TimeUtils.timeStr24HrToLongArr(end);
-
-		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(el[0], el[1], sl[0], sl[1]), false);
+		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(TimeUtils.timeStr24HrToLongArr(end), TimeUtils.timeStr24HrToLongArr(start)), false);
 	}
 
 	/**
@@ -70,10 +78,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static long elapsedTimeMins(final String start, final String end) {
-		final long[] sl = TimeUtils.timeStr24HrToLongArr(start),
-				el = TimeUtils.timeStr24HrToLongArr(end);
-
-		final long[] subtractedTime = subtractClockTime(el[0], el[1], sl[0], sl[1]);
+		final long[] subtractedTime = subtractClockTime(TimeUtils.timeStr24HrToLongArr(end), TimeUtils.timeStr24HrToLongArr(start));
 
 		return subtractedTime[0] * 60 + subtractedTime[1];
 	}
@@ -90,7 +95,22 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static long[] subtractClockTime(final long tHours, final long tMins, final long sHours, final long sMins) {
-		return TimeUtils.cleanUpClockTime(tHours - sHours, tMins - sMins);
+		return TimeUtils.cleanUp24HrClockTime_2(tHours - sHours, tMins - sMins);
+	}
+
+	/**
+	 * works with any time subtraction
+	 * 
+	 * @param time
+	 * 		hh:mm
+	 * @param subtractedTime
+	 * 		hh:mm
+	 * @return
+	 * 		hh:mm
+	 * @author TelevisionNinja
+	 */
+	public static long[] subtractClockTime(final long[] tArr, final long[] sArr) {
+		return TimeUtils.cleanUp24HrClockTime_2(tArr[0] - sArr[0], tArr[1] - sArr[1]);
 	}
 
 	/**
@@ -105,10 +125,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractClockTime(final String time, final String subtractedTime) {
-		final long[] tl = TimeUtils.timeStr24HrToLongArr(time),
-				sl = TimeUtils.timeStr24HrToLongArr(subtractedTime);
-
-		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(tl[0], tl[1], sl[0], sl[1]), true);
+		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(TimeUtils.timeStr24HrToLongArr(time), TimeUtils.timeStr24HrToLongArr(subtractedTime)), true);
 	}
 
 	/**
@@ -127,10 +144,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String timeAgo(final String subtractedTime, final String offset) {
-		final long[] sl = TimeUtils.timeStr24HrToLongArr(subtractedTime),
-				currentTime = TimeUtils.get24HrTimeArr(offset);
-
-		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(currentTime[0], currentTime[1], sl[0], sl[1]), true);
+		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(TimeUtils.get24HrTimeArr(offset), TimeUtils.timeStr24HrToLongArr(subtractedTime)), true);
 	}
 
 	/**
@@ -149,10 +163,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String timeFromNow(final String addedTime, final String offset) {
-		final long[] al = TimeUtils.timeStr24HrToLongArr(addedTime),
-				currentTime = TimeUtils.get24HrTimeArr(offset);
-
-		return TimeUtils.longArrTo24HrTimeStr(addClockTime(currentTime[0], currentTime[1], al[0], al[1]), true);
+		return TimeUtils.longArrTo24HrTimeStr(addClockTime(TimeUtils.get24HrTimeArr(offset), TimeUtils.timeStr24HrToLongArr(addedTime)), true);
 	}
 
 	/**
@@ -171,10 +182,7 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String timeSince(final String start, final String offset) {
-		final long[] sl = TimeUtils.timeStr24HrToLongArr(start),
-				currentTime = TimeUtils.get24HrTimeArr(offset);
-
-		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(currentTime[0], currentTime[1], sl[0], sl[1]), false);
+		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(TimeUtils.get24HrTimeArr(offset), TimeUtils.timeStr24HrToLongArr(start)), false);
 	}
 
 	/**
@@ -193,9 +201,6 @@ public class ClockUtils24Hr2 {
 	 * @author TelevisionNinja
 	 */
 	public static String timeUntil(final String end, final String offset) {
-		final long[] el = TimeUtils.timeStr24HrToLongArr(end),
-				currentTime = TimeUtils.get24HrTimeArr(offset);
-
-		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(el[0], el[1], currentTime[0], currentTime[1]), false);
+		return TimeUtils.longArrTo24HrTimeStr(subtractClockTime(TimeUtils.timeStr24HrToLongArr(end), TimeUtils.get24HrTimeArr(offset)), false);
 	}
 }

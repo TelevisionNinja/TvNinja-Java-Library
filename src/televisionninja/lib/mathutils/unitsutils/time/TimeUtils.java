@@ -18,13 +18,11 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static String addTime(final String time, final String add) {
-		final String separator = ":";
-		final String[] s = time.split(separator),
-				e = add.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = time.split(":"),
+				e = add.split(":");
+		final long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -66,13 +64,13 @@ public class TimeUtils {
 		}
 
 		return years +
-				separator +
+				":" +
 				days +
-				separator +
+				":" +
 				hours +
-				separator +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
-				separator +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 
@@ -661,14 +659,12 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractTime_1(final String time, final String sub) {
-		final String separator = ":";
 		String sign = "";
-		final String[] s = sub.split(separator),
-				e = time.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = sub.split(":"),
+				e = time.split(":");
+		long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -680,11 +676,9 @@ public class TimeUtils {
 		 */
 
 		if (el[0] < sl[0]) {
-			for (int x = 0; x < length; x++) {
-				final long temp = el[x];
-				el[x] = sl[x];
-				sl[x] = temp;
-			}
+			final long[] temp = el;
+			el = sl;
+			sl = temp;
 			sign = "-";
 		}
 
@@ -723,13 +717,13 @@ public class TimeUtils {
 
 		return sign +
 				years +
-				separator +
+				":" +
 				days +
-				separator +
-				hours +
-				separator +
+				":" +
+				StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
-				separator +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 
@@ -745,14 +739,12 @@ public class TimeUtils {
 	 * @author TelevisionNinja
 	 */
 	public static String subtractTime_2(final String time, final String sub) {
-		final String separator = ":";
 		String sign = "";
-		final String[] s = sub.split(separator),
-				e = time.split(separator);
-		final int length = s.length;
-		final long[] sl = new long[length],
-				el = new long[length];
-		for (int x = 0; x < length; x++) {
+		final String[] s = sub.split(":"),
+				e = time.split(":");
+		long[] sl = new long[s.length],
+				el = new long[s.length];
+		for (int x = 0; x < s.length; x++) {
 			sl[x] = Long.parseLong(s[x]);
 			el[x] = Long.parseLong(e[x]);
 		}
@@ -764,12 +756,9 @@ public class TimeUtils {
 		 */
 
 		if (el[0] < sl[0]) {
-			for (int x = 0; x < length; x++) {
-				final long temp = el[x];
-				el[x] = sl[x];
-				sl[x] = temp;
-			}
-
+			final long[] temp = el;
+			el = sl;
+			sl = temp;
 			sign = "-";
 		}
 
@@ -804,13 +793,13 @@ public class TimeUtils {
 
 		return sign +
 				years +
-				separator +
+				":" +
 				days +
-				separator +
-				hours +
-				separator +
+				":" +
+				StringUtils.addLeadingToString_1(Long.toString(hours), '0', 2) +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(mins), '0', 2) +
-				separator +
+				":" +
 				StringUtils.addLeadingToString_1(Long.toString(sec), '0', 2);
 	}
 

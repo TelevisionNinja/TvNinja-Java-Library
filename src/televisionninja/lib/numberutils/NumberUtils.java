@@ -275,7 +275,8 @@ public class NumberUtils {
 		if (num < 0) {
 			num *= -1;
 		}
-		else if (num < 100000) {
+
+		if (num < 100000) {
 			// 5 or less
 			if (num < 100) {
 				// 1 or 2
@@ -396,7 +397,8 @@ public class NumberUtils {
 		char ch;
 		if (s == null || (end = s.length()) == 0 ||
 				((ch = s.charAt(0)) < '0' || ch > '9')
-				&& (!(sign = ch == '-') || ++idx == end || ((ch = s.charAt(idx)) < '0' || ch > '9'))) {
+				&& (!(sign = ch == '-') || ++idx == end ||
+				((ch = s.charAt(idx)) < '0' || ch > '9'))) {
 			throw new NumberFormatException(s);
 		}
 

@@ -389,7 +389,8 @@ public class Statistics {
 	}
 
 	/**
-	 * set is not sorted in the method
+	 * set is not sorted inside of the method
+	 * set must be passed in already sorted
 	 * 
 	 * @param set
 	 * @param percent
@@ -399,11 +400,11 @@ public class Statistics {
 	public static double percentile(final double[] set, final double percent) {
 		final double index = percent * ((set.length + 1d) / 100d) - 1d,
 				roundUp = Math.ceil(index),
-				reoundDown = Math.floor(index);
-		if (roundUp == reoundDown) {
+				roundDown = Math.floor(index);
+		if (roundUp == roundDown) {
 			return set[(int) index];
 		}
-		return (set[(int) roundUp] + set[(int) reoundDown]) / 2d;
+		return (set[(int) roundUp] + set[(int) roundDown]) / 2d;
 	}
 
 	/**
@@ -532,7 +533,7 @@ public class Statistics {
 		final double mean = mean_1(arr);
 
 		for (int x = 0; x < arr.length; x++) {
-			final double difference = (arr[x] - mean);
+			final double difference = arr[x] - mean;
 			arr[x] =  difference * difference;
 		}
 
@@ -550,7 +551,7 @@ public class Statistics {
 		final double mean = mean_2(arr);
 
 		for (int x = 0; x < arr.length; x++) {
-			final double difference = (arr[x] - mean);
+			final double difference = arr[x] - mean;
 			arr[x] = difference * difference;
 		}
 
@@ -569,7 +570,7 @@ public class Statistics {
 		double total = 0d;
 
 		for (final double value : arr) {
-			final double difference = (value - mean);
+			final double difference = value - mean;
 			total += difference * difference;
 		}
 
@@ -588,7 +589,7 @@ public class Statistics {
 				length = arr.length;
 
 		for (int x = 0; x < length; x++) {
-			final double difference = (arr[x] - mean);
+			final double difference = arr[x] - mean;
 			arr[x] =  difference * difference;
 		}
 
@@ -607,7 +608,7 @@ public class Statistics {
 		double total = 0d;
 
 		for (final double value : arr) {
-			final double difference = (value - mean);
+			final double difference = value - mean;
 			total += difference * difference;
 		}
 

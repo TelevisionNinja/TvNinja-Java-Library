@@ -23,7 +23,7 @@ public class ConvertStringToAnother {
 				l2 = s2.length();
 		final int[][] DP = new int[l1 + 1][l2 + 1];
 
-		// initilize by the maximum edits possible
+		// initialize by the maximum edits possible
 		for (int i = 0; i <= l1; i++) {
 			DP[i][0] = i;
 		}
@@ -41,7 +41,7 @@ public class ConvertStringToAnother {
 					DP[i][j] = DP[i - 1][j - 1];
 				} else {
 
-					// minimu of three operations possible
+					// minimum of three operations possible
 					DP[i][j] = min(DP[i - 1][j - 1], DP[i - 1][j], DP[i][j - 1]) + 1;
 				}
 			}
@@ -129,7 +129,7 @@ public class ConvertStringToAnother {
 					if2 = true;
 				}
 
-				// Add charater step
+				// Add character step
 				if (dp[i][j] == dp[i][j - 1] + 1) {
 					if (if1 == false && if2 == false) {
 						changes.add("Add " + s2.charAt(j - 1));

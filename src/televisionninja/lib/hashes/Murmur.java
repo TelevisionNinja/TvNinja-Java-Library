@@ -9,7 +9,7 @@ package televisionninja.lib.hashes;
  */
 public class Murmur {
 	/**
-	 * gets the little endian int from 4 bytes starting at the index
+	 * gets the little endian int from 4 bytes starting at an index
 	 * 
 	 * @param string
 	 * @param index
@@ -49,14 +49,14 @@ public class Murmur {
 		int k = 0;
 
 		switch (remainder) {
-		case 3:
-			k ^= (string.charAt(i + 2) & 0xff) << 16;
-		case 2:
-			k ^= (string.charAt(i + 1) & 0xff) << 8;
-		case 1:
-			k ^= string.charAt(i) & 0xff;
-
-			hash ^= murmur3Scramble(k);
+			case 3:
+				k ^= (string.charAt(i + 2) & 0xff) << 16;
+			case 2:
+				k ^= (string.charAt(i + 1) & 0xff) << 8;
+			case 1:
+				k ^= string.charAt(i) & 0xff;
+	
+				hash ^= murmur3Scramble(k);
 		}
 
 		hash ^= string.length();

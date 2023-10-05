@@ -796,6 +796,378 @@ public class StringUtils {
 	}
 
 	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_1(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length;
+
+		for (int i = 0; (i == start || i == length - end) && i < length; i++) {
+			final int newEnd = end - 1;
+
+			if (str.charAt(newEnd) == trimChar) {
+				end = newEnd;
+			}
+
+			if (str.charAt(start) == trimChar) {
+				start++;
+			}
+		}
+
+		if (start < end) {
+			if (end == length) {
+				if (start == 0) {
+					return str;
+				}
+
+				return str.substring(start);
+			}
+
+			return str.substring(start, end);
+		}
+
+		return "";
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_2_0(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length;
+
+		while (start < end) {
+			if (str.charAt(end - 1) == trimChar) {
+				end--;
+
+				if (str.charAt(start) == trimChar) {
+					start++;
+				}
+			}
+			else {
+				if (str.charAt(start) == trimChar) {
+					start++;
+				}
+				else {
+					if (end == length) {
+						if (start == 0) {
+							return str;
+						}
+
+						return str.substring(start);
+					}
+
+					return str.substring(start, end);
+				}
+			}
+		}
+
+		return "";
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_2_1(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length,
+				initialS = length,
+				initialE = 0;
+
+		while (start != initialS || end != initialE) {
+			initialS = start;
+			initialE = end;
+
+			if (str.charAt(end - 1) == trimChar) {
+				end--;
+
+				if (end == 0) {
+					return "";
+				}
+			}
+
+			if (str.charAt(start) == trimChar) {
+				start++;
+			}
+		}
+
+		if (end == length) {
+			if (start == 0) {
+				return str;
+			}
+
+			return str.substring(start);
+		}
+
+		return str.substring(start, end);
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_2_2(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length;
+
+		for (int i = 1; start < end; i++) {
+			final int initialS = start,
+					initialE = end,
+					newEnd = end - 1;
+
+			if (str.charAt(newEnd) == trimChar) {
+				end = newEnd;
+			}
+
+			if (str.charAt(start) == trimChar) {
+				start = i;
+			}
+
+			if (start == initialS && end == initialE) {
+				if (end == length) {
+					if (start == 0) {
+						return str;
+					}
+
+					return str.substring(start);
+				}
+
+				return str.substring(start, end);
+			}
+		}
+
+		return "";
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_2_3(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length;
+
+		while (start < end) {
+			final int initialS = start,
+					initialE = end;
+
+			if (str.charAt(end - 1) == trimChar) {
+				end--;
+			}
+
+			if (str.charAt(start) == trimChar) {
+				start++;
+			}
+
+			if (start == initialS && end == initialE) {
+				if (end == length) {
+					if (start == 0) {
+						return str;
+					}
+
+					return str.substring(start);
+				}
+
+				return str.substring(start, end);
+			}
+		}
+
+		return "";
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_3(final String str, final char trimChar) {
+		final int length = str.length();
+		int end = length - 1;
+		for (; end > 0; end--) {
+			if (str.charAt(end) != trimChar) {
+				break;
+			}
+		}
+
+		end++;
+
+		if (end == 0) {
+			return "";
+		}
+
+		int start = 0;
+		for (; start < end; start++) {
+			if (str.charAt(start) != trimChar) {
+				break;
+			}
+		}
+
+		if (end == length) {
+			if (start == 0) {
+				return str;
+			}
+
+			return str.substring(start);
+		}
+
+		return str.substring(start, end);
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @param str
+	 * @param trimChar
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_4(final String str, final char trimChar) {
+		final int length = str.length();
+		int start = 0,
+				end = length - 1;
+
+		while (start < end) {
+			final boolean startWhitespace = str.charAt(start) == trimChar,
+					endWhitespace = str.charAt(end) == trimChar;
+
+			if (!startWhitespace && !endWhitespace) {
+				break;
+			}
+
+			if (startWhitespace) {
+				start++;
+			}
+
+			if (endWhitespace) {
+				end--;
+			}
+		}
+
+		end++;
+
+		if (start < end) {
+			if (end == length) {
+				if (start == 0) {
+					return str;
+				}
+
+				return str.substring(start);
+			}
+
+			return str.substring(start, end);
+		}
+
+		return "";
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_5(final String str, final char trimChar) {
+		final int length = str.length();
+		int end = length;
+		while (end > 0) {
+			if (str.charAt(end - 1) != trimChar) {
+				break;
+			}
+
+			end--;
+		}
+
+		if (end == 0) {
+			return "";
+		}
+
+		int start = 0;
+		while (start < end) {
+			if (str.charAt(start) != trimChar) {
+				break;
+			}
+
+			start++;
+		}
+
+		if (end == length) {
+			if (start == 0) {
+				return str;
+			}
+
+			return str.substring(start);
+		}
+
+		return str.substring(start, end);
+	}
+
+	/**
+	 * trims the specified char off the provided string
+	 * 
+	 * @return
+	 * @author TelevisionNinja
+	 */
+	public static String trim_6(final String str, final char trimChar) {
+		final int length = str.length();
+		int end = length;
+		for (; end > 0; end--) {
+			if (str.charAt(end - 1) != trimChar) {
+				break;
+			}
+		}
+
+		if (end == 0) {
+			return "";
+		}
+
+		int start = 0;
+		for (; start < end; start++) {
+			if (str.charAt(start) != trimChar) {
+				break;
+			}
+		}
+
+		if (end == length) {
+			if (start == 0) {
+				return str;
+			}
+
+			return str.substring(start);
+		}
+
+		return str.substring(start, end);
+	}
+
+	/**
 	 * 
 	 * @param word1
 	 * @param word2

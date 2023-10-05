@@ -12,6 +12,8 @@ public class Timer {
 			elapsedTime = 0,
 			startValue = 0;
 
+	private boolean isRunning = false;
+
 	/**
 	 * @author TelevisionNinja
 	 */
@@ -24,8 +26,8 @@ public class Timer {
 	 * @param initialTime
 	 * @author TelevisionNinja
 	 */
-	public Timer(final long initialTime) {
-		this.startValue = initialTime;
+	public Timer(final long startingValue) {
+		this.startValue = startingValue;
 	}
 
 	/**
@@ -43,10 +45,11 @@ public class Timer {
 	 * 		nanoseconds
 	 * @author TelevisionNinja
 	 */
-	public long getTime(final boolean check) {
-		if (check) {
-			this.elapsedTime = System.nanoTime() - this.initialTime + this.startValue;
+	public long getTime() {
+		if (this.isRunning) {
+			return System.nanoTime() - this.initialTime + this.startValue;
 		}
+
 		return this.elapsedTime;
 	}
 
@@ -57,17 +60,18 @@ public class Timer {
 	 */
 	public void reset() {
 		this.elapsedTime = this.startValue;
+		this.isRunning = false;
 	}
 
 	/**
 	 * set timer by nanoseconds
 	 * 
-	 * @param amount
+	 * @param value
 	 * 		nanoseconds
 	 * @author TelevisionNinja
 	 */
-	public void setStartValue(final long amount) {
-		this.startValue = amount;
+	public void setStartValue(final long value) {
+		this.startValue = value;
 	}
 
 	/**
@@ -76,6 +80,8 @@ public class Timer {
 	 */
 	public void start() {
 		this.initialTime = System.nanoTime();
+		this.isRunning = true;
+		this.elapsedTime = this.startValue;
 	}
 
 	/**
@@ -83,6 +89,9 @@ public class Timer {
 	 * @author TelevisionNinja
 	 */
 	public void stop() {
-		this.elapsedTime = System.nanoTime() - this.initialTime + this.startValue;
+		if (this.isRunning) {
+			this.elapsedTime = System.nanoTime() - this.initialTime + this.startValue;
+			this.isRunning = false;
+		}
 	}
 }

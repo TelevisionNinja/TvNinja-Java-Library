@@ -537,7 +537,7 @@ public class MathUtils extends NumberUtils {
 	}
 
 	/**
-	 * onilne method
+	 * online method
 	 * 
 	 * @param value
 	 * @param decimalPlaces

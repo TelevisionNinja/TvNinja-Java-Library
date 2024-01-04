@@ -19,7 +19,7 @@ public class MathUtils extends NumberUtils {
 	 * @author TelevisionNinja
 	 */
 	public static long addSequence(final long n) {
-		return (n + 1) / 2 * n;
+		return (n + 1) * n / 2;
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class MathUtils extends NumberUtils {
 	 * @author TelevisionNinja
 	 */
 	public static long addSequence(final long start, final long end) {
-		return (end - start + 1) / 2 * (start + end);
+		return (end - start + 1) * (start + end) / 2;
 	}
 
 	/**

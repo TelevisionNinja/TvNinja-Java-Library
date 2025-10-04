@@ -22,6 +22,7 @@ module televisionninja.lib {
 	exports televisionninja.lib.switchutils.switchtoggle;
 	exports televisionninja.lib.mathutils;
 	exports televisionninja.lib.datastructures;
+	exports televisionninja.lib.unittest;
 
 	requires java.desktop;
 }

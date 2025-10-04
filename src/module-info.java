@@ -21,6 +21,7 @@ module televisionninja.lib {
 	exports televisionninja.lib.mathutils.unitsutils.money;
 	exports televisionninja.lib.switchutils.switchtoggle;
 	exports televisionninja.lib.mathutils;
+	exports televisionninja.lib.datastructures;
 
 	requires java.desktop;
 }

@@ -88,7 +88,6 @@ public class AhoCorasick {
 
 	        if (!node.children.containsKey(c)) {
 	        	node.children.put(c, new AhoCorasickNode());
-	            node.children.get(c).length = i; // height of the tree is the length of the string
 	        }
 
 	        node = node.children.get(c);
@@ -96,6 +95,7 @@ public class AhoCorasick {
 
 	    node.outputLinks.add(node);
 	    node.isEndOfWord = true;
+	    node.length = word.length(); // height at the node is the length of the string
 	}
 
 	public void insert(final String word) {

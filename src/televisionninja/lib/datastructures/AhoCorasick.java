@@ -11,13 +11,11 @@ import java.util.ArrayList;
 public class AhoCorasick {
 	protected class AhoCorasickNode {
 		public HashMap<Character, AhoCorasickNode> children; // can be replaced with array if alphabet is known
-		public boolean isEndOfWord;
         public AhoCorasickNode suffixLink;
         public HashSet<AhoCorasickNode> outputLinks;
         public int length;
 
         public AhoCorasickNode() {
-            this.isEndOfWord = false;
             this.suffixLink = null;
             this.length = 0;
             
@@ -31,11 +29,11 @@ public class AhoCorasick {
 
 	protected boolean deleteTrieNode(AhoCorasickNode node, final String word, int depth) {
 	    if (depth == word.length()) {
-	        if (!node.isEndOfWord) {
+	        if (node.length == 0) {
 	            return false;
 	        }
 
-	        node.isEndOfWord = false;
+	        node.length = 0;
 	        return node.children.isEmpty();
 	    }
 
@@ -50,7 +48,7 @@ public class AhoCorasick {
 	    if (shouldDeleteChild) {
 	    	// delete node.children.get(c);
 	        node.children.remove(c);
-	        return node.children.isEmpty() && !node.isEndOfWord;
+	        return node.children.isEmpty() && node.length == 0;
 	    }
 
 	    return false;
@@ -94,7 +92,6 @@ public class AhoCorasick {
 	    }
 
 	    node.outputLinks.add(node);
-	    node.isEndOfWord = true;
 	    node.length = word.length(); // height at the node is the length of the string
 	}
 
@@ -110,7 +107,9 @@ public class AhoCorasick {
 	    AhoCorasickNode node = this.root;
 	    ArrayList<int[]> output = new ArrayList<>();
 
-	    if (node.isEndOfWord) { // empty string case
+	    // empty string case
+	    // only the root's output set's size is check because the empty string has no length
+	    if (!node.outputLinks.isEmpty()) {
 	        output.add(new int[] {0, 0}); // no need to iterate through output links
 	    }
 
@@ -185,7 +184,7 @@ public class AhoCorasick {
 	                value.suffixLink = this.root;
 	            }
 
-	            if (value.suffixLink.isEndOfWord) {
+	            if (value.suffixLink.length != 0) {
 	                value.outputLinks.addAll(value.suffixLink.outputLinks); // set1 U copy(set2)
 	            }
 	        }
@@ -205,7 +204,7 @@ public class AhoCorasick {
 	        currentNode.suffixLink = null;
 	        currentNode.outputLinks.clear();
 
-	        if (currentNode.isEndOfWord) {
+	        if (currentNode.length != 0) {
 	            currentNode.outputLinks.add(currentNode);
 	        }
 

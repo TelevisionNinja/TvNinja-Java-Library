@@ -183,7 +183,7 @@ public class AhoCorasick {
 	                value.suffixLink = this.root;
 	            }
 
-	            if (value.suffixLink.length != 0) {
+	            if (!value.suffixLink.outputLinks.isEmpty()) {
 	                value.outputLinks.addAll(value.suffixLink.outputLinks); // set1 U copy(set2)
 	            }
 	        }

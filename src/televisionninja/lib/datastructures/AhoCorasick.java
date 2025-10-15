@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Stack;
 import java.util.Queue;
 import java.util.LinkedList; // FIFO queue
-import java.util.Map;
 import java.util.ArrayList;
 
 public class AhoCorasick {
@@ -165,7 +164,7 @@ public class AhoCorasick {
 	        AhoCorasickNode currentNode = nodeQueue.element();
 	        nodeQueue.remove();
 
-	        for (Map.Entry<Character, AhoCorasickNode> entry : currentNode.children.entrySet()) { // node.children.values()            KKKEEEEEYYYYYY
+	        for (HashMap.Entry<Character, AhoCorasickNode> entry : currentNode.children.entrySet()) { // node.children.values()            KKKEEEEEYYYYYY
 	            Character key = entry.getKey();
 	        	AhoCorasickNode value = entry.getValue();
 

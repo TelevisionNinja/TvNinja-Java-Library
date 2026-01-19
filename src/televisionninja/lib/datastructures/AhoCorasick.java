@@ -212,4 +212,60 @@ public class AhoCorasick {
 	        }
 	    }
 	}
+
+	/**
+	 * returns a vector of tuples (global index, length, line number, line index)
+	 */
+	public ArrayList<int[]> searchVerbose(final String string) {
+	    AhoCorasickNode node = this.root;
+	    ArrayList<int[]> output = new ArrayList<>();
+
+	    // empty string case
+	    // only the root's output set's size is check because the empty string has no length
+	    if (!node.outputLinks.isEmpty()) {
+	        output.add(new int[] {0, 0, 1, 1}); // no need to iterate through output links
+	    }
+
+	    int i = 0;
+	    int lineNumber = 1;
+	    boolean skipIncrement = false;
+	    int lineIndex = 1;
+
+	    while (i < string.length()) {
+	        final char c = string.charAt(i);
+
+	        if (skipIncrement) {
+				skipIncrement = false;
+			}
+			else {
+				if (c == '\n') {
+					lineNumber++;
+					lineIndex = 1;
+				}
+				else {
+					lineIndex++;
+				}
+			}
+
+	        if (node.children.containsKey(c)) {
+	            node = node.children.get(c);
+	            i++;
+
+	            if (!node.outputLinks.isEmpty()) {
+	                for (AhoCorasickNode outputNode : node.outputLinks) { // node.outputLinks.values()
+	                    output.add(new int[] {i - outputNode.length, outputNode.length, lineNumber, lineIndex - outputNode.length});
+	                }
+	            }
+	        }
+	        else if (node == this.root) {
+	            i++;
+	        }
+	        else {
+	            node = node.suffixLink;
+				skipIncrement = true;
+	        }
+	    }
+
+	    return output;
+	}
 }
